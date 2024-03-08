@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.news.android.application)
     alias(libs.plugins.news.android.compose.application)
+//    alias(libs.plugins.news.android.firebase)
 }
 
 android {

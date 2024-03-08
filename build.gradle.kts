@@ -38,6 +38,7 @@ subprojects {
 
         exclude("**/resources/**")
         exclude("**/generated/**")
+        exclude("**/iosApp/**")
         exclude("**/build/**")
 
         if (File("$projectDir/detekt-baseline.xml").exists()) {

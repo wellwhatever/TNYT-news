@@ -1,7 +1,5 @@
 plugins {
     alias(libs.plugins.news.kotlin.multiplatform.library)
-//    alias(libs.plugins.news.android.library)
-//    alias(libs.plugins.news.android.firebase)
 }
 
 kotlin {
