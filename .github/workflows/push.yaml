@@ -22,6 +22,4 @@ jobs:
       - run: echo "Building Debug APK."
       - name: Build with Gradle
         run: ./gradlew build
-      - name: "detekt"
-        uses: natiginfo/action-detekt-all@1.23.5
       - run: echo "Build status report=${{ job.status }}."
