@@ -22,7 +22,7 @@ plugins {
 }
 
 val reportMerge by tasks.registering(ReportMergeTask::class) {
-    output.set(rootProject.layout.buildDirectory.file("reports/detekt/merge.xml"))
+    output.set(rootProject.layout.buildDirectory.file("reports/detekt/merge.sarif"))
 }
 
 subprojects {
@@ -48,7 +48,7 @@ subprojects {
     }
 
     reportMerge {
-        input.from(tasks.withType<Detekt>().map { it.xmlReportFile })
+        input.from(tasks.withType<Detekt>().map { it.sarifReportFile })
     }
 }
 
