@@ -19,6 +19,7 @@ dependencyResolutionManagement {
 rootProject.name = "TNYT_News"
 include(":androidApp")
 include(":shared")
-include(":shared:data")
-include(":shared:domain")
-include(":shared:core")
+include(":shared:core:network")
+include(":shared:core:common")
+include(":shared:data:articles")
+include(":shared:domain:articles")

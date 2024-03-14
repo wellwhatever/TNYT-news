@@ -23,5 +23,5 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.news.shared.core"
+    namespace = "com.example.news.shared.core.network"
 }
