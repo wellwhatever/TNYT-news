@@ -13,6 +13,7 @@ sqlDelightGradle = "2.0.1"
 skie = "0.6.1"
 detekt = "1.23.5"
 detektCompose = "0.3.12"
+safeargs = "2.7.7"
 
 # AndroidX
 androidCore = "1.12.0"
@@ -64,6 +65,9 @@ desugaring = "2.0.4"
 
 # Other
 kotlinDatetime = "0.5.0"
+espresso-core = "3.5.1"
+appcompat = "1.6.1"
+material = "1.11.0"
 
 [libraries]
 
@@ -105,7 +109,7 @@ koin-multiplatform = { module = "io.insert-koin:koin-core", version.ref = "koin"
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 compose-navigationRuntime = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "composeNavigation" }
 compose-destinations = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "composeDestinations" }
-compose-destinationsKsp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinations" }
+compose-destinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinations" }
 
 # Lifecycle
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -155,6 +159,9 @@ kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kote
 
 # Desugaring
 desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugaring" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -170,11 +177,13 @@ sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelightGradle" }
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseGradlePlugin" }
+safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "safeargs" }
 
 # Application defined plugins
 news-android-application = { id = "news.android.application", version = "unspecified" }
-news-android-compose-application = { id = "news.android.application.compose", version = "unspecified" }
+news-android-application-compose = { id = "news.android.application.compose", version = "unspecified" }
 news-android-library = { id = "news.android.library", version = "unspecified" }
+news-android-library-compose = { id = "news.android.library.compose", version = "unspecified" }
 news-android-test-library = { id = "news.android.test", version = "unspecified" }
 news-android-compose-navigation = { id = "news.android.navigation", version = "unspecified" }
 news-android-room = { id = "news.android.room", version = "unspecified" }
@@ -235,5 +244,5 @@ navigation = [
 ]
 
 navigation-ksp = [
-    "compose-destinationsKsp"
+    "compose-destinations-ksp"
 ]

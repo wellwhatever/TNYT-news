@@ -30,6 +30,10 @@ gradlePlugin {
             id = "news.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+        register("androidLibraryCompose") {
+            id = "news.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
         register("androidTest") {
             id = "news.android.test"
             implementationClass = "AndroidLibraryTestConventionPlugin"

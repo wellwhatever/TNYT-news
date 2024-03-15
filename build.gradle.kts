@@ -13,7 +13,8 @@ plugins {
             kotlin.serialization,
             sqlDelight,
             skie,
-            firebase.crashlytics
+            firebase.crashlytics,
+            safeargs
         ).forEach {
             alias(it) apply false
         }
