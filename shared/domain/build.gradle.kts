@@ -4,15 +4,8 @@ plugins {
 
 kotlin {
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                // test dependencies
-            }
+        commonMain.dependencies {
+            implementation(projects.shared.core.model)
         }
     }
 }

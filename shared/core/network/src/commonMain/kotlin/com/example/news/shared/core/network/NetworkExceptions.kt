@@ -6,4 +6,4 @@ class NoInternetException : ApiException()
 
 class HttpExceptionDomain(val code: Int) : ApiException()
 
-internal expect fun Throwable.isNoInternet(): Boolean
+expect fun Throwable.isNoInternet(): Boolean

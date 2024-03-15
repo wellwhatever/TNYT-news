@@ -22,4 +22,6 @@ dependencies {
     implementation(projects.shared)
     implementation(libs.bundles.compose)
     debugImplementation(libs.compose.uiTooling)
+
+    implementation(projects.shared.domain)
 }

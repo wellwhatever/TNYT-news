@@ -8,7 +8,7 @@ internal val apiNoInternetException = DarwinHttpRequestException(
     NSError(domain = NSURLErrorDomain, code = -1009L, userInfo = null),
 )
 
-internal actual fun Throwable.isNoInternet(): Boolean {
+actual fun Throwable.isNoInternet(): Boolean {
     return this is DarwinHttpRequestException &&
         origin.domain == apiNoInternetException.origin.domain &&
         origin.code == apiNoInternetException.origin.code

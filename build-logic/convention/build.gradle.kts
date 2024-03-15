@@ -11,6 +11,7 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.firebase.gradlePlugin)
+    compileOnly(libs.ksp.gradlePlugin)
 }
 
 group = "com.example.news.build-logic"

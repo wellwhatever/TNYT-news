@@ -1,18 +1,19 @@
 plugins {
     alias(libs.plugins.news.kotlin.multiplatform.library)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 kotlin {
     sourceSets {
-        val commonMain by getting {
-            dependencies {
+        commonMain.dependencies {
+            implementation(libs.kotlin.serialization)
+            implementation(libs.kotlin.datetime)
+            implementation(libs.ktor.core)
+            implementation(libs.koin.multiplatform)
 
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                // test dependencies
-            }
+            implementation(projects.shared.core.network)
+            implementation(projects.shared.core.common)
+            implementation(projects.shared.core.model)
         }
     }
 }

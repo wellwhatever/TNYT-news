@@ -11,11 +11,11 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpMethod
 import io.ktor.http.isSuccess
 
-internal class NetworkClient(
+class NetworkClient(
     private val baseUrl: String,
     httpClient: HttpClient,
 ) {
-    private val httpClientInternal = httpClient.config {
+    val httpClientInternal = httpClient.config {
         defaultRequest {
             url(baseUrl)
         }
@@ -39,7 +39,7 @@ internal class NetworkClient(
         }
     }
 
-    private suspend inline fun <reified T : Any> safeCall(callHttpMethod: () -> HttpResponse): T {
+    suspend inline fun <reified T : Any> safeCall(callHttpMethod: () -> HttpResponse): T {
         val response = mapApiExceptions { callHttpMethod() }
         return if (response.status.isSuccess()) {
             response.body()
@@ -48,7 +48,7 @@ internal class NetworkClient(
         }
     }
 
-    private inline fun mapApiExceptions(block: () -> HttpResponse): HttpResponse {
+    inline fun mapApiExceptions(block: () -> HttpResponse): HttpResponse {
         return runCatching(block).getOrElse { exception ->
             throw when {
                 exception.isNoInternet() -> NoInternetException()
@@ -57,7 +57,7 @@ internal class NetworkClient(
         }
     }
 
-    private fun HttpResponse.toHttpException(): HttpExceptionDomain {
+    fun HttpResponse.toHttpException(): HttpExceptionDomain {
         return HttpExceptionDomain(code = status.value)
     }
 }
