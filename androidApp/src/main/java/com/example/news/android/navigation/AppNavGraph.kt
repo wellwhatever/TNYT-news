@@ -1,18 +1,14 @@
 package com.example.news.android.navigation
 
+import com.example.news.feature.article.ArticleNavGraph
 import com.ramcosta.composedestinations.spec.DestinationSpec
 import com.ramcosta.composedestinations.spec.NavGraphSpec
-import com.ramcosta.composedestinations.spec.Route
 
 object AppNavGraph : NavGraphSpec {
-    override val destinationsByRoute: Map<String, DestinationSpec<*>>
-        get() = TODO("Not yet implemented")
-    override val route: String
-        get() = TODO("Not yet implemented")
-    override val startRoute: Route
-        get() = TODO("Not yet implemented")
-
-    override val nestedNavGraphs: List<NavGraphSpec>
-        get() = super.nestedNavGraphs
-
+    override val route = "appGraph"
+    override val destinationsByRoute = emptyMap<String, DestinationSpec<*>>()
+    override val startRoute = ArticleNavGraph
+    override val nestedNavGraphs: List<NavGraphSpec> = listOf(
+        ArticleNavGraph
+    )
 }

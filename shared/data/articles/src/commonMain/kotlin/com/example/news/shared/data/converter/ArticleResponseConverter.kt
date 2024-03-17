@@ -9,7 +9,7 @@ internal class ArticleResponseConverter {
         Article(
             id = id.toString(),
             title = title,
-            publishedDate = publishedDate.toLocalDate(),
+            publishedDate = publishedDate,
             section = section,
             source = source,
         )

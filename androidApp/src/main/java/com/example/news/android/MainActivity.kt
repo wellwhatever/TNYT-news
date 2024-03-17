@@ -3,8 +3,16 @@ package com.example.news.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import com.example.news.android.navigation.AppNavGraph
 import com.example.news.android.theme.TNYTTheme
@@ -26,8 +34,21 @@ class MainActivity : ComponentActivity() {
 fun TNYTApp(
     modifier: Modifier = Modifier,
 ) {
-    DestinationsNavHost(
-        modifier = modifier,
-        navGraph = AppNavGraph
-    )
+    val snackbarHostState = remember { SnackbarHostState() }
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background,
+    ) {
+        Scaffold(
+            snackbarHost = {
+                SnackbarHost(snackbarHostState)
+            }
+        ) {
+            DestinationsNavHost(
+                modifier = modifier.padding(it),
+                navGraph = AppNavGraph
+            )
+        }
+    }
+
 }

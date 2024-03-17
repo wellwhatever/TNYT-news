@@ -1,7 +1,10 @@
 package com.example.news.shared.data.remote.model
 
 
+import com.example.news.shared.core.common.serializer.InstantAsStringSerializer
+import com.example.news.shared.core.common.serializer.LocalDateAsStringSerializer
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -32,7 +35,8 @@ data class ArticleResponse(
     @SerialName("per_facet")
     val perFacet: List<String>,
     @SerialName("published_date")
-    val publishedDate: Instant,
+    @Serializable(with = LocalDateAsStringSerializer::class)
+    val publishedDate: LocalDate,
     @SerialName("section")
     val section: String,
     @SerialName("source")
