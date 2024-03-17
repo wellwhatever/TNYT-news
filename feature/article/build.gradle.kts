@@ -5,6 +5,14 @@ plugins {
 }
 
 dependencies {
+    implementation(libs.koin.android)
+    implementation(libs.koin.compose)
+    implementation(libs.compose.material)
+    implementation(libs.kotlin.datetime)
+    implementation(libs.timber)
+
+    implementation(projects.shared.core.model)
+    implementation(projects.shared.domain.articles)
 }
 
 android {

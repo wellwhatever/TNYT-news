@@ -1,4 +1,4 @@
-package com.example.news.shared.domain
+package com.example.news.shared.domain.articles
 
 import com.example.news.shared.code.data.ArticlesRepository
 import com.example.news.shared.code.model.Article

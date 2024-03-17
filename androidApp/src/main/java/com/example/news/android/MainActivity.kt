@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import com.example.news.android.navigation.AppNavGraph
 import com.example.news.android.theme.TNYTTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
-import com.ramcosta.composedestinations.spec.NavGraphSpec
 
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
@@ -17,14 +16,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TNYTTheme {
-                TNYTApplication()
+                TNYTApp()
             }
         }
     }
 }
 
 @Composable
-fun TNYTApplication(
+fun TNYTApp(
     modifier: Modifier = Modifier,
 ) {
     DestinationsNavHost(

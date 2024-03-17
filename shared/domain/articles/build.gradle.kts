@@ -4,15 +4,11 @@ plugins {
 
 kotlin {
     sourceSets {
-        val commonMain by getting {
-            dependencies {
+        commonMain.dependencies {
+            implementation(libs.koin.multiplatform)
 
-            }
-        }
-        val commonTest by getting {
-            dependencies {
-                // test dependencies
-            }
+            implementation(projects.shared.core.model)
+            implementation(projects.shared.data.articles)
         }
     }
 }

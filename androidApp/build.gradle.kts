@@ -22,7 +22,11 @@ android {
 dependencies {
     implementation(projects.shared)
     implementation(libs.bundles.compose)
+    implementation(libs.koin.android)
+    implementation(libs.timber)
+
     debugImplementation(libs.compose.uiTooling)
 
-    implementation(projects.shared.domain)
+    implementation(projects.feature.article)
+    implementation(projects.shared.domain.articles)
 }

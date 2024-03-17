@@ -1,4 +1,4 @@
-package com.example.news.shared.core.di
+package com.example.news.shared.core.common.di
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
