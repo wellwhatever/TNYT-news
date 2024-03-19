@@ -36,19 +36,18 @@ fun TNYTApp(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
     ) {
         Scaffold(
             snackbarHost = {
                 SnackbarHost(snackbarHostState)
-            }
+            },
         ) {
             DestinationsNavHost(
-                modifier = modifier.padding(it),
-                navGraph = AppNavGraph
+                modifier = Modifier.padding(it),
+                navGraph = AppNavGraph,
             )
         }
     }
-
 }

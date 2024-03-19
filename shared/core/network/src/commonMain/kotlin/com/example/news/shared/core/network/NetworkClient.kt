@@ -39,7 +39,7 @@ class NetworkClient(
                     ignoreUnknownKeys = true
                     prettyPrint = true
                     isLenient = true
-                }
+                },
             )
         }
 

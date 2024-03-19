@@ -9,6 +9,6 @@ object AppNavGraph : NavGraphSpec {
     override val destinationsByRoute = emptyMap<String, DestinationSpec<*>>()
     override val startRoute = ArticleNavGraph
     override val nestedNavGraphs: List<NavGraphSpec> = listOf(
-        ArticleNavGraph
+        ArticleNavGraph,
     )
 }

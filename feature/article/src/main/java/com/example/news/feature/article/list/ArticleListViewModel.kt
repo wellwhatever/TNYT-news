@@ -3,69 +3,88 @@ package com.example.news.feature.article.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.shared.code.model.Article
+import com.example.news.shared.core.common.navigation.NavigatorScope
 import com.example.news.shared.domain.articles.GetMostViewedArticlesUseCase
-import kotlinx.coroutines.channels.Channel
+import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
+import kotlin.time.Duration.Companion.seconds
 
-class ArticleListViewModel(
-    private val getMostViewedArticles: GetMostViewedArticlesUseCase
-) : ViewModel(), ArticleListActions {
+class ArticleListViewModel internal constructor(
+    private val getMostViewedArticles: GetMostViewedArticlesUseCase,
+    navigation: ArticleListNavigationImpl,
+) : ViewModel(),
+    NavigatorScope,
+    ArticleListScreenActions,
+    ArticleListNavigation by navigation {
+    override val navigationScope = viewModelScope
+
     private val errorFlow = MutableStateFlow<String?>(null)
-    private val articlesFlow = MutableStateFlow<List<Article>?>(null)
+    private val searchQueryFlow = MutableStateFlow("")
 
-    private val _navigateToDetailScreen = Channel<String>(Channel.CONFLATED)
-    val navigateToDetailScreen = _navigateToDetailScreen.receiveAsFlow()
+    private val filteredArticles: Flow<List<Article>?> = searchQueryFlow
+        .debounce(0.5.seconds)
+        .transformLatest {
+            emit(null)
+            emit(getMostViewedArticles(it))
+        }
 
-    val articleListState: StateFlow<ArticleListScreenState> = combine(
-        articlesFlow,
+    private val searchBarState = searchQueryFlow.map {
+        ArticleSearchBarState(it)
+    }
+
+    private val articleListState = combine(
+        filteredArticles,
         errorFlow,
     ) { articles, error ->
         when {
-            error != null -> ArticleListScreenState.Error(error)
-            articles == null -> ArticleListScreenState.Loading
-            else -> ArticleListScreenState.Content(articles)
+            error != null -> ArticleListState.Error(error)
+            articles == null -> ArticleListState.Loading
+            else -> ArticleListState.Content(
+                articles = articles.toImmutableList(),
+            )
         }
+    }
+
+    val articleListScreenState: StateFlow<ArticleListScreenState> = combine(
+        searchBarState,
+        articleListState,
+    ) { searchState, articleState ->
+        ArticleListScreenState.Content(
+            articleListState = articleState,
+            searchBarState = searchState,
+        )
     }.stateIn(
         viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = ArticleListScreenState.Loading
+        initialValue = ArticleListScreenState.Loading,
     )
 
-    init {
-        fetchArticles()
+    override fun onQueryChange(updatedQuery: String) {
+        viewModelScope.launch {
+            searchQueryFlow.value = updatedQuery
+        }
     }
 
-    private fun fetchArticles() {
+    override fun onClearQueryClick() {
         viewModelScope.launch {
-            try {
-                articlesFlow.value = getMostViewedArticles()
-            } catch (exc: Exception) {
-                // TODO handle exception properly
-                Timber.e(exc)
-            }
+            searchQueryFlow.value = ""
         }
     }
 
     override fun onArticleClick(articleId: String) {
-        viewModelScope.launch {
-            _navigateToDetailScreen.send(articleId)
-        }
+        navigateToArticleDetail(articleId)
     }
-}
 
-sealed interface ArticleListScreenState {
-    data object Loading : ArticleListScreenState
-
-    data class Error(val message: String) : ArticleListScreenState
-
-    data class Content(
-        val articles: List<Article>
-    ) : ArticleListScreenState
+    override fun onBackClick() {
+        navigateBack(Unit)
+    }
 }

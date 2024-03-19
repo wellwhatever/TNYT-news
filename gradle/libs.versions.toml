@@ -22,6 +22,7 @@ lifecycle = "2.7.0"
 # Kotlin
 kotlin = "1.9.22"
 coroutines = "1.8.0"
+kotlin-immutableCollections = "0.3.7"
 
 # KSP
 ksp = "1.9.22-1.0.18"
@@ -43,6 +44,7 @@ composeViewmodel = "2.7.0"
 composeCoil = "2.5.0"
 composeDestinations = "1.9.59"
 composeNavigation = "2.7.7"
+composeRuntime = "1.6.3"
 
 # Koin
 koin = "3.5.3"
@@ -64,7 +66,7 @@ firebaseBom = "32.7.4"
 desugaring = "2.0.4"
 
 # Other
-kotlinDatetime = "0.5.0"
+kotlinDatetime = "0.6.0-RC.2"
 espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.11.0"
@@ -98,6 +100,7 @@ compose-uiUtil = { module = "androidx.compose.ui:ui-util" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "composeViewmodel" }
 compose-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeRuntime" }
 compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "composeCoil" }
 
 # Koin
@@ -124,6 +127,7 @@ kotlin-coroutinesAndroid = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 kotlin-coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinDatetime" }
+kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin-immutableCollections" }
 
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
@@ -210,7 +214,8 @@ compose = [
     "compose-viewmodel",
     "compose-uiTooling",
     "compose-uiUtil",
-    "compose-ui"
+    "compose-ui",
+    "kotlin-immutable-collections"
 ]
 
 koin = [

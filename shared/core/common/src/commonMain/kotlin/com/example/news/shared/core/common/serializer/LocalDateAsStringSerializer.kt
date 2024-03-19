@@ -1,6 +1,5 @@
 package com.example.news.shared.core.common.serializer
 
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind

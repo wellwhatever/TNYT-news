@@ -19,7 +19,7 @@ val articleDataModule = module {
         NetworkClient(
             baseUrl = NEW_YORK_TIMES_BASE_URL,
             httpClient = get(),
-            apiKey = "Dt7Q08LpKCGVrKTxfWtpxAguSrM6ddTx"
+            apiKey = "Dt7Q08LpKCGVrKTxfWtpxAguSrM6ddTx",
         )
     }
 

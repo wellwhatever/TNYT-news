@@ -1,5 +1,4 @@
-package com.example.news.shared.data.remote.model
-
+package com.example.news.shared.data.remote.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -8,10 +7,8 @@ import kotlinx.serialization.Serializable
 data class ArticleResponseWrapper(
     @SerialName("copyright")
     val copyright: String,
-    @SerialName("num_results")
-    val numResults: Int,
-    @SerialName("results")
-    val articleResponseWrappers: List<ArticleResponse>,
+    @SerialName("response")
+    val articleResponse: SearchResponse,
     @SerialName("status")
-    val status: String
+    val status: String,
 )

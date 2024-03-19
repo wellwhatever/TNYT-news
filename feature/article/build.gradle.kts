@@ -12,6 +12,7 @@ dependencies {
     implementation(libs.timber)
 
     implementation(projects.shared.core.model)
+    implementation(projects.shared.core.common)
     implementation(projects.shared.domain.articles)
 }
 

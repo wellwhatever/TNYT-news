@@ -2,15 +2,15 @@ package com.example.news.shared.data.converter
 
 import com.example.news.shared.code.model.Article
 import com.example.news.shared.core.common.toLocalDate
-import com.example.news.shared.data.remote.model.ArticleResponse
+import com.example.news.shared.data.remote.response.ArticleResponse
 
 internal class ArticleResponseConverter {
     fun toDomain(response: ArticleResponse) = with(response) {
         Article(
-            id = id.toString(),
-            title = title,
-            publishedDate = publishedDate,
-            section = section,
+            id = id,
+            title = abstract,
+            publishedDate = pubDate.toLocalDate(),
+            section = sectionName.orEmpty(),
             source = source,
         )
     }
