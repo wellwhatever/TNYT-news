@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="article_search_field_placeholder">search…</string>
+    <string name="article_search_no_results">No results</string>
+    <string name="article_search_clear_query">Clear search query</string>
+</resources>

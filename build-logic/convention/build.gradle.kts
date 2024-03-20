@@ -11,6 +11,7 @@ dependencies {
     compileOnly(libs.android.gradlePlugin)
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.firebase.gradlePlugin)
+    compileOnly(libs.ksp.gradlePlugin)
 }
 
 group = "com.example.news.build-logic"
@@ -28,6 +29,10 @@ gradlePlugin {
         register("androidLibrary") {
             id = "news.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
+        }
+        register("androidLibraryCompose") {
+            id = "news.android.library.compose"
+            implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
         register("androidTest") {
             id = "news.android.test"

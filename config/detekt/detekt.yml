@@ -127,14 +127,12 @@ complexity:
     active: true
     threshold: 600
   LongMethod:
-    ignoreAnnotated: [ 'Composable' ]
     active: true
     threshold: 60
   LongParameterList:
-    ignoreAnnotated: [ 'Composable', 'HiltViewModel' ]
     active: true
     functionThreshold: 10
-    constructorThreshold: 15
+    constructorThreshold: 7
     ignoreDefaultParameters: true
     ignoreDataClasses: true
     ignoreAnnotatedParameter: [ ]
@@ -170,7 +168,7 @@ complexity:
     active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
     thresholdInFiles: 11
-    thresholdInClasses: 15
+    thresholdInClasses: 11
     thresholdInInterfaces: 11
     thresholdInObjects: 11
     thresholdInEnums: 11
@@ -285,7 +283,7 @@ exceptions:
   ThrowingNewInstanceOfSameException:
     active: true
   TooGenericExceptionCaught:
-    active: false
+    active: true
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
     exceptionNames:
       - 'ArrayIndexOutOfBoundsException'
@@ -367,7 +365,7 @@ naming:
     packagePattern: '[a-z]+(\.[a-z][A-Za-z0-9]*)*'
   TopLevelPropertyNaming:
     active: true
-    constantPattern: '[A-Za-z][_A-Za-z0-9]*'
+    constantPattern: '[A-Z][_A-Za-z0-9]*'
     propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
     privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
   VariableMaxLength:
@@ -576,8 +574,12 @@ style:
   ForbiddenComment:
     active: true
     comments:
+      - reason: 'Forbidden FIXME todo marker in comment, please fix the problem.'
+        value: 'FIXME:'
       - reason: 'Forbidden STOPSHIP todo marker in comment, please address the problem before shipping the code.'
         value: 'STOPSHIP:'
+      - reason: 'Forbidden TODO todo marker in comment, please do the changes.'
+        value: 'TODO:'
     allowedPatterns: ''
   ForbiddenImport:
     active: false
@@ -606,7 +608,7 @@ style:
     active: true
     maxJumpCount: 1
   MagicNumber:
-    active: true
+    active: false
     excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**', '**/*.kts' ]
     ignoreNumbers:
       - '-1'
@@ -736,7 +738,7 @@ style:
   UnusedPrivateClass:
     active: true
   UnusedPrivateMember:
-    ignoreAnnotated: [ 'Preview', 'ThemePreviews' ]
+    ignoreAnnotated: [ 'Preview' ]
     active: true
     allowedNames: ''
   UnusedPrivateProperty:
@@ -1080,7 +1082,6 @@ Compose:
     active: true
   ComposableNaming:
     active: true
-    allowedComposableFunctionNames: .*Presenter
   ComposableParamOrder:
     active: true
   PreviewAnnotationNaming:

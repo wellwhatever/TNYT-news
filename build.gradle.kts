@@ -13,7 +13,8 @@ plugins {
             kotlin.serialization,
             sqlDelight,
             skie,
-            firebase.crashlytics
+            firebase.crashlytics,
+            safeargs
         ).forEach {
             alias(it) apply false
         }
@@ -22,7 +23,7 @@ plugins {
 }
 
 val reportMerge by tasks.registering(ReportMergeTask::class) {
-    output.set(rootProject.layout.buildDirectory.file("reports/detekt/merge.xml"))
+    output.set(rootProject.layout.buildDirectory.file("reports/detekt/merge.sarif"))
 }
 
 subprojects {
@@ -38,6 +39,7 @@ subprojects {
 
         exclude("**/resources/**")
         exclude("**/generated/**")
+        exclude("**/iosApp/**")
         exclude("**/build/**")
 
         if (File("$projectDir/detekt-baseline.xml").exists()) {
@@ -47,7 +49,7 @@ subprojects {
     }
 
     reportMerge {
-        input.from(tasks.withType<Detekt>().map { it.xmlReportFile })
+        input.from(tasks.withType<Detekt>().map { it.sarifReportFile })
     }
 }
 

@@ -21,8 +21,10 @@ internal fun Project.configureCompose(
 
         dependencies {
             val bom = libs.findLibrary("compose-bom").get()
-            add("implementation", platform(bom))
-            add("androidTestImplementation", platform(bom))
+            val compose = libs.findBundle("compose").get()
+            "implementation"(platform(bom))
+            "implementation"(compose)
+            "androidTestImplementation"(platform(bom))
         }
     }
 }

@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.news.android.application)
-    alias(libs.plugins.news.android.compose.application)
+    alias(libs.plugins.news.android.application.compose)
+    alias(libs.plugins.news.android.compose.navigation)
+//    alias(libs.plugins.news.android.firebase)
 }
 
 android {
@@ -20,5 +22,11 @@ android {
 dependencies {
     implementation(projects.shared)
     implementation(libs.bundles.compose)
+    implementation(libs.koin.android)
+    implementation(libs.timber)
+
     debugImplementation(libs.compose.uiTooling)
+
+    implementation(projects.feature.article)
+    implementation(projects.shared.domain.articles)
 }

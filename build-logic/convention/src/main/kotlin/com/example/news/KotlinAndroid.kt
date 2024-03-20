@@ -39,7 +39,9 @@ fun Project.configureKotlin() {
             kotlinOptions {
                 freeCompilerArgs += listOf(
                     "-Xcontext-receivers",
-                    "-Xexpect-actual-classes"
+                    "-Xexpect-actual-classes",
+                    "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                    "-Xopt-in=kotlinx.coroutines.FlowPreview",
                 )
             }
         }

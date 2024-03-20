@@ -6,48 +6,48 @@ compileSdk = "34"
 targetSdk = "34"
 
 # Gradle plugins
-androidGradlePlugin = "8.1.4"
+androidGradlePlugin = "8.2.0"
 firebaseGradlePlugin = "2.9.9"
-gms = "4.3.15"
-sqlDelightGradle = "2.0.0"
-skie = "0.6.0"
+gms = "4.4.1"
+sqlDelightGradle = "2.0.1"
+skie = "0.6.1"
 detekt = "1.23.5"
-detektCompose = "0.3.11"
+detektCompose = "0.3.12"
+safeargs = "2.7.7"
 
 # AndroidX
 androidCore = "1.12.0"
-lifecycle = "2.6.2"
+lifecycle = "2.7.0"
 
 # Kotlin
-kotlin = "1.9.10"
-coroutines = "1.7.1"
+kotlin = "1.9.22"
+coroutines = "1.8.0"
+kotlin-immutableCollections = "0.3.7"
 
 # KSP
-ksp = "1.9.10-1.0.13"
+ksp = "1.9.22-1.0.18"
 
 # Network
-ktor = "2.3.5"
+ktor = "2.3.8"
 okhttp = "4.11.0"
-serialization = "1.6.0"
+serialization = "1.6.3"
 
 # Persistance
 datastore = "1.1.0-alpha05"
-sqlDelight = "2.0.0"
+sqlDelight = "2.0.1"
 
 # Compose
-composeBom = "2023.09.02"
-composeCompiler = "1.5.3"
-composeActivity = "1.7.2"
-composeViewmodel = "2.6.2"
-composeCoil = "2.4.0"
-composeDestinations = "1.9.53"
-composeNavigation = "2.7.3"
+composeBom = "2024.02.02"
+composeCompiler = "1.5.10"
+composeActivity = "1.8.2"
+composeViewmodel = "2.7.0"
+composeCoil = "2.5.0"
+composeDestinations = "1.9.59"
+composeNavigation = "2.7.7"
+composeRuntime = "1.6.3"
 
 # Koin
-koin = "3.5.0"
-
-# Authentication
-appAuth = "0.11.1"
+koin = "3.5.3"
 
 # Testing
 junit = "4.13.2"
@@ -56,18 +56,21 @@ mockk = "1.13.8"
 testArchCore = "2.2.0"
 testRunner = "1.5.2"
 testRules = "1.5.0"
-turbine = "0.12.1"
+turbine = "1.0.0"
 kotest = "5.8.0"
 
 # Firebase
-firebaseBom = "32.3.1"
+firebaseBom = "32.7.4"
 
 # Desugaring
-desugaring = "2.0.3"
+desugaring = "2.0.4"
 
 # Other
-kotlinDatetime = "0.4.1"
-calendar = "2.4.0"
+kotlinDatetime = "0.6.0-RC.2"
+espresso-core = "3.5.1"
+appcompat = "1.6.1"
+material = "1.11.0"
+timber = "5.0.1"
 
 [libraries]
 
@@ -75,6 +78,7 @@ calendar = "2.4.0"
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 firebase-gradlePlugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseGradlePlugin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 android-gms = { module = "com.google.gms:google-services", version.ref = "gms" }
 
 # Lint
@@ -96,6 +100,7 @@ compose-uiUtil = { module = "androidx.compose.ui:ui-util" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "composeViewmodel" }
 compose-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeRuntime" }
 compose-coil = { module = "io.coil-kt:coil-compose", version.ref = "composeCoil" }
 
 # Koin
@@ -104,14 +109,11 @@ koin-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-multiplatform = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 
-# Authentication
-appAuth = { module = "net.openid:appauth", version.ref = "appAuth" }
-
 # Compose Navigation
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 compose-navigationRuntime = { module = "androidx.navigation:navigation-runtime-ktx", version.ref = "composeNavigation" }
 compose-destinations = { module = "io.github.raamcosta.compose-destinations:core", version.ref = "composeDestinations" }
-compose-destinationsKsp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinations" }
+compose-destinations-ksp = { module = "io.github.raamcosta.compose-destinations:ksp", version.ref = "composeDestinations" }
 
 # Lifecycle
 lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
@@ -125,6 +127,7 @@ kotlin-coroutinesAndroid = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-
 kotlin-coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 kotlin-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinDatetime" }
+kotlin-immutable-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlin-immutableCollections" }
 
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
@@ -161,10 +164,9 @@ kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kote
 
 # Desugaring
 desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugaring" }
-animation-graphics-android = { group = "androidx.compose.animation", name = "animation-graphics-android", version = "1.5.4" }
 
-# Calendar
-calendar = { module = "com.kizitonwose.calendar:compose", version.ref = "calendar" }
+# Timber
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -180,11 +182,13 @@ sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelightGradle" }
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseGradlePlugin" }
+safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "safeargs" }
 
 # Application defined plugins
 news-android-application = { id = "news.android.application", version = "unspecified" }
-news-android-compose-application = { id = "news.android.application.compose", version = "unspecified" }
+news-android-application-compose = { id = "news.android.application.compose", version = "unspecified" }
 news-android-library = { id = "news.android.library", version = "unspecified" }
+news-android-library-compose = { id = "news.android.library.compose", version = "unspecified" }
 news-android-test-library = { id = "news.android.test", version = "unspecified" }
 news-android-compose-navigation = { id = "news.android.navigation", version = "unspecified" }
 news-android-room = { id = "news.android.room", version = "unspecified" }
@@ -210,7 +214,8 @@ compose = [
     "compose-viewmodel",
     "compose-uiTooling",
     "compose-uiUtil",
-    "compose-ui"
+    "compose-ui",
+    "kotlin-immutable-collections"
 ]
 
 koin = [
@@ -245,5 +250,5 @@ navigation = [
 ]
 
 navigation-ksp = [
-    "compose-destinationsKsp"
+    "compose-destinations-ksp"
 ]
