@@ -3,7 +3,6 @@ package com.example.news.feature.article.list
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,10 +13,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -35,6 +32,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.news.feature.article.R
 import com.example.news.feature.article.destinations.ArticleDetailScreenDestination
 import com.example.news.shared.code.model.Article
+import com.example.news.feature.article.ui.GenericScreenLoading
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -88,7 +86,7 @@ private fun ArticleListScreenInternal(
     modifier: Modifier = Modifier,
 ) {
     when (state) {
-        ArticleListScreenState.Loading -> FullScreenLoading(modifier = modifier)
+        ArticleListScreenState.Loading -> GenericScreenLoading(modifier = modifier)
 
         is ArticleListScreenState.Content -> {
             ArticleSearchBar(
@@ -112,7 +110,7 @@ private fun ArticleListContent(
     modifier: Modifier = Modifier,
 ) {
     when (state) {
-        ArticleListState.Loading -> FullScreenLoading(modifier = modifier)
+        ArticleListState.Loading -> GenericScreenLoading(modifier = modifier)
         is ArticleListState.Error -> {
             // TODO implement error handling!
         }
@@ -151,7 +149,7 @@ private fun ArticleSearchBar(
             trailingIcon = @Composable {
                 Icon(
                     modifier = Modifier.clickable(
-                        onClick = actions::onBackClick,
+                        onClick = actions::onClearQueryClick,
                         interactionSource = remember { MutableInteractionSource() },
                         indication = rememberRipple(bounded = false),
                     ),
@@ -197,7 +195,6 @@ private fun ArticleList(
             items = articles,
             key = { _, item -> item.id },
         ) { index, article ->
-            ListItem(headlineContent = { /*TODO*/ })
             ArticleListItem(
                 article = article,
                 onArticleClick = onArticleClick,
@@ -266,18 +263,6 @@ private fun ArticleListEmpty(
             text = stringResource(id = R.string.article_search_no_results),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineSmall,
-        )
-    }
-}
-
-// TODO extract from here
-@Composable
-fun FullScreenLoading(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier,
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center),
         )
     }
 }

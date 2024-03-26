@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS ArticleEntity (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    firstParagraph TEXT NOT NULL,
+    publishedDate TEXT NOT NULL,
+    section TEXT NOT NULL,
+    source TEXT NOT NULL,
+    imageUrl TEXT NOT NULL,
+    webUrl TEXT NOT NULL,
+    desk TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS index_Article_section ON ArticleEntity(section);
+
+getAllArticles:
+SELECT * FROM ArticleEntity;
+
+getArticle:
+SELECT * FROM ArticleEntity
+WHERE ArticleEntity.id IS :id
+LIMIT 1;
+
+insertArticle:
+INSERT OR REPLACE INTO ArticleEntity
+VALUES ?;
+

@@ -2,12 +2,11 @@ package com.example.news.shared.data.remote
 
 import com.example.news.shared.code.model.Article
 import com.example.news.shared.core.network.NetworkClient
-import com.example.news.shared.data.converter.ArticleResponseConverter
 import com.example.news.shared.data.remote.response.ArticleResponse
 import com.example.news.shared.data.remote.response.ArticleResponseWrapper
 import io.ktor.http.HttpMethod
 
-internal class ArticlesRemoteDataSource(
+internal class ArticleRemoteDataSource(
     private val networkClient: NetworkClient,
     private val articleConverter: ArticleResponseConverter,
 ) {

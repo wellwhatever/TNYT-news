@@ -2,7 +2,7 @@ package com.example.news.feature.article.list
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
-import com.example.news.shared.core.common.navigation.NavigationDelegate
+import com.example.news.feature.article.ui.NavigationDelegate
 
 @Immutable
 internal interface ArticleListScreenActions : ArticleListActions, ArticleSearchBarActions

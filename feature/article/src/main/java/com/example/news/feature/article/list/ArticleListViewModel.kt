@@ -3,8 +3,8 @@ package com.example.news.feature.article.list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.shared.code.model.Article
-import com.example.news.shared.core.common.navigation.NavigatorScope
-import com.example.news.shared.domain.articles.GetMostViewedArticlesUseCase
+import com.example.news.feature.article.ui.NavigatorScope
+import com.example.news.shared.domain.articles.GetArticlesUseCase
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 class ArticleListViewModel internal constructor(
-    private val getMostViewedArticles: GetMostViewedArticlesUseCase,
+    private val getMostViewedArticles: GetArticlesUseCase,
     navigation: ArticleListNavigationImpl,
 ) : ViewModel(),
     NavigatorScope,

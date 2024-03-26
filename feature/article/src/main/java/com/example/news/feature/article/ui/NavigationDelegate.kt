@@ -1,4 +1,4 @@
-package com.example.news.shared.core.common.navigation
+package com.example.news.feature.article.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -11,7 +11,6 @@ interface NavigatorScope {
     val navigationScope: CoroutineScope
 }
 
-// TODO consider renaming it!
 class NavigationDelegate<T> {
     private val channel = Channel<T>(Channel.CONFLATED)
     private val flow = channel.receiveAsFlow()

@@ -1,4 +1,4 @@
-package com.example.news.shared.data.converter
+package com.example.news.shared.data.remote
 
 import com.example.news.shared.code.model.Article
 import com.example.news.shared.core.common.toLocalDate
@@ -12,6 +12,10 @@ internal class ArticleResponseConverter {
             publishedDate = pubDate.toLocalDate(),
             section = sectionName.orEmpty(),
             source = source,
+            imageUrl = multimedia.firstOrNull()?.url.orEmpty(),
+            firstParagraph = leadParagraph,
+            desk = newsDesk,
+            webUrl = webUrl
         )
     }
 }

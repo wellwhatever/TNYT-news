@@ -11,7 +11,7 @@ plugins {
             android.gms,
             kotlin.ksp,
             kotlin.serialization,
-            sqlDelight,
+            sqldelight,
             skie,
             firebase.crashlytics,
             safeargs

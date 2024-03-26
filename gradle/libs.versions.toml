@@ -9,7 +9,6 @@ targetSdk = "34"
 androidGradlePlugin = "8.2.0"
 firebaseGradlePlugin = "2.9.9"
 gms = "4.4.1"
-sqlDelightGradle = "2.0.1"
 skie = "0.6.1"
 detekt = "1.23.5"
 detektCompose = "0.3.12"
@@ -42,7 +41,7 @@ composeCompiler = "1.5.10"
 composeActivity = "1.8.2"
 composeViewmodel = "2.7.0"
 composeCoil = "2.5.0"
-composeDestinations = "1.9.59"
+composeDestinations = "1.10.2"
 composeNavigation = "2.7.7"
 composeRuntime = "1.6.3"
 
@@ -79,6 +78,7 @@ android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", ver
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 firebase-gradlePlugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseGradlePlugin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+sqldelight-gradlePlugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
 android-gms = { module = "com.google.gms:google-services", version.ref = "gms" }
 
 # Lint
@@ -140,10 +140,10 @@ ktor-ios = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
 
 # Persistance
 datastore = { module = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
-sqlDelight-common = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
-sqlDelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
-sqlDelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
-sqlDelight-ios = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+sqldelight-common = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
+sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+sqldelight-ios = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -178,7 +178,7 @@ kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref 
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-sqlDelight = { id = "app.cash.sqldelight", version.ref = "sqlDelightGradle" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseGradlePlugin" }
@@ -191,9 +191,9 @@ news-android-library = { id = "news.android.library", version = "unspecified" }
 news-android-library-compose = { id = "news.android.library.compose", version = "unspecified" }
 news-android-test-library = { id = "news.android.test", version = "unspecified" }
 news-android-compose-navigation = { id = "news.android.navigation", version = "unspecified" }
-news-android-room = { id = "news.android.room", version = "unspecified" }
 news-android-firebase = { id = "news.android.firebase", version = "unspecified" }
 news-kotlin-multiplatform-library = { id = "news.kotlin.multiplatform.library", version = "unspecified" }
+news-database-sqldelight = { id = "news.database.sqldelight", version = "unspecified" }
 
 [bundles]
 kotlin = [
