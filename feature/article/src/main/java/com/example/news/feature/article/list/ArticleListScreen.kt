@@ -27,12 +27,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.news.feature.article.R
 import com.example.news.feature.article.destinations.ArticleDetailScreenDestination
-import com.example.news.shared.code.model.Article
 import com.example.news.feature.article.ui.GenericScreenLoading
+import com.example.news.shared.code.model.Article
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -231,6 +232,8 @@ private fun ArticleListItem(
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.titleMedium,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis
             )
             // TODO fix this
             Text(
