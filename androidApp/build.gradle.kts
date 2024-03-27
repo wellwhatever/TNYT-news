@@ -23,6 +23,7 @@ dependencies {
     implementation(projects.shared)
     implementation(libs.bundles.compose)
     implementation(libs.koin.android)
+    implementation(libs.koin.compose)
     implementation(libs.timber)
 
     debugImplementation(libs.compose.uiTooling)
