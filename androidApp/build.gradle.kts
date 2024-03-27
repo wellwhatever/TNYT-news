@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.news.android.application)
     alias(libs.plugins.news.android.application.compose)
     alias(libs.plugins.news.android.compose.navigation)
-//    alias(libs.plugins.news.android.firebase)
+    alias(libs.plugins.news.android.firebase)
 }
 
 android {

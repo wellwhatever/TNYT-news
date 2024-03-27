@@ -2,8 +2,8 @@ package com.example.news.feature.article.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.news.shared.code.model.Article
 import com.example.news.feature.article.ui.NavigatorScope
+import com.example.news.shared.code.model.Article
 import com.example.news.shared.domain.articles.GetArticlesUseCase
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
