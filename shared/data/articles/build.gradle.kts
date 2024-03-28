@@ -19,5 +19,5 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.news.shared.data"
+    namespace = "com.example.news.shared.data.articles"
 }

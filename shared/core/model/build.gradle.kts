@@ -11,5 +11,5 @@ kotlin {
 }
 
 android {
-    namespace = "com.example.news.shared.code.model"
+    namespace = "com.example.news.shared.core.model"
 }

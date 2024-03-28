@@ -1,11 +1,11 @@
 import com.android.build.gradle.LibraryExtension
 import com.example.news.configureAndroid
 import com.example.news.configureKotlin
+import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 class KotlinMultiplatformLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -35,7 +35,7 @@ class KotlinMultiplatformLibraryConventionPlugin : Plugin<Project> {
                     iosSimulatorArm64()
                 ).forEach {
                     it.binaries.framework {
-                        baseName = "shared"
+                        baseName = "library"
                         isStatic = true
                     }
                 }
