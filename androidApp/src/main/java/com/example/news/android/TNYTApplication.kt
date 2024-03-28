@@ -19,7 +19,7 @@ class TNYTApplication : Application() {
             modules(
                 appModule,
                 articleListModule,
-                articleDetailModule
+                articleDetailModule,
             )
         }
     }

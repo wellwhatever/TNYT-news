@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS ArticleEntity (
 
 CREATE INDEX IF NOT EXISTS index_Article_section ON ArticleEntity(section);
 
-getAllArticles:
-SELECT * FROM ArticleEntity;
+deleteAll:
+DELETE FROM ArticleEntity;
 
 getArticle:
 SELECT * FROM ArticleEntity

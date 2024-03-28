@@ -17,11 +17,11 @@ import kotlinx.coroutines.launch
 
 class ArticleDetailViewModel(
     getArticle: GetArticleUseCase,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel(), ArticleDetailScreenActions {
     private val errorFlow = MutableStateFlow<String?>(null)
     private val articleFlow = getArticle(
-        ArticleDetailScreenDestination.argsFrom(savedStateHandle).detailId
+        ArticleDetailScreenDestination.argsFrom(savedStateHandle).detailId,
     )
 
     private val _eventRedirectToWeb = Channel<String>(Channel.CONFLATED)
@@ -43,7 +43,7 @@ class ArticleDetailViewModel(
         }.stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
-            ArticleDetailScreenState.Loading
+            ArticleDetailScreenState.Loading,
         )
 
     override fun onBackClick() {
@@ -70,6 +70,6 @@ sealed interface ArticleDetailScreenState {
     data class Error(val message: String) : ArticleDetailScreenState
 
     data class Content(
-        val article: Article
+        val article: Article,
     ) : ArticleDetailScreenState
 }

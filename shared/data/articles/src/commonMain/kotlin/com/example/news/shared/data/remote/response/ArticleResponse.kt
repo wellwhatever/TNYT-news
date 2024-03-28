@@ -22,7 +22,7 @@ data class ArticleResponse(
     @SerialName("multimedia")
     val multimedia: List<MultimediaResponse>,
     @SerialName("news_desk")
-    val newsDesk: String,
+    val newsDesk: String? = null,
     @SerialName("pub_date")
     @Serializable(with = InstantAsStringSerializer::class)
     val pubDate: Instant,
@@ -31,7 +31,7 @@ data class ArticleResponse(
     @SerialName("snippet")
     val snippet: String,
     @SerialName("source")
-    val source: String,
+    val source: String? = null,
     @SerialName("uri")
     val uri: String,
     @SerialName("web_url")

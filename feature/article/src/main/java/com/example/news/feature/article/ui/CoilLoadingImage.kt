@@ -25,7 +25,7 @@ fun CoilLoadingImage(
     onSuccess: (String) -> Unit = {},
 ) {
     val imageRequest = ImageRequest.Builder(LocalContext.current)
-        .data("https://www.nytimes.com/$imageUrl")
+        .data(imageUrl)
         .crossfade(true)
         .size(Size.ORIGINAL)
         .scale(Scale.FIT)

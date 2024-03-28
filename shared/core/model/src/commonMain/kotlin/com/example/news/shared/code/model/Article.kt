@@ -11,5 +11,5 @@ data class Article(
     val source: String,
     val imageUrl: String,
     val webUrl: String,
-    val desk: String
+    val desk: String,
 )

@@ -29,7 +29,7 @@ internal class ArticleEntityConverter {
             source = source,
             imageUrl = imageUrl,
             webUrl = webUrl,
-            desk = desk
+            desk = desk,
         )
     }
 }

@@ -5,12 +5,14 @@ import com.example.news.di.platformDatabaseModule
 import com.example.news.shared.code.data.ArticlesRepository
 import com.example.news.shared.core.common.di.IoDispatcher
 import com.example.news.shared.core.di.networkPlatformModule
+import com.example.news.shared.core.network.DomainExceptionMapper
 import com.example.news.shared.core.network.NetworkClient
 import com.example.news.shared.data.ArticleRepositoryImpl
 import com.example.news.shared.data.local.ArticleEntityConverter
 import com.example.news.shared.data.local.ArticleLocalDataSource
 import com.example.news.shared.data.remote.ArticleRemoteDataSource
 import com.example.news.shared.data.remote.ArticleResponseConverter
+import com.example.news.shared.data.remote.RemoteDomainExceptionMapper
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
@@ -21,15 +23,16 @@ val articleDataModule = module {
     includes(
         networkPlatformModule,
         platformDatabaseModule,
-        databaseModule
+        databaseModule,
     )
 
     single {
         NetworkClient(
+            // TODO extract to secrets!
+            apiKey = "Dt7Q08LpKCGVrKTxfWtpxAguSrM6ddTx",
             baseUrl = "https://api.nytimes.com/",
             httpClient = get(),
-            // TODO extract it to secrets!
-            apiKey = "Dt7Q08LpKCGVrKTxfWtpxAguSrM6ddTx",
+            domainExceptionMapper = get(),
         )
     }
 
@@ -43,6 +46,9 @@ val articleDataModule = module {
     }
     singleOf(::ArticleRepositoryImpl) bind ArticlesRepository::class
 
-    factoryOf(::ArticleResponseConverter)
+    factory {
+        ArticleResponseConverter("https://www.nytimes.com/")
+    }
     factoryOf(::ArticleEntityConverter)
+    factoryOf(::RemoteDomainExceptionMapper) bind DomainExceptionMapper::class
 }

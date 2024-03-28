@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.news.feature.article.R
 import com.example.news.feature.article.ui.CoilLoadingImage
+import com.example.news.feature.article.ui.GenericErrorScreen
 import com.example.news.feature.article.ui.GenericScreenLoading
 import com.example.news.shared.code.model.Article
 import com.ramcosta.composedestinations.annotation.Destination
@@ -40,7 +41,7 @@ import org.koin.androidx.compose.koinViewModel
 fun ArticleDetailScreen(
     navigator: DestinationsNavigator,
     detailId: String,
-    viewModel: ArticleDetailViewModel = koinViewModel()
+    viewModel: ArticleDetailViewModel = koinViewModel(),
 ) {
     val state = viewModel.screenState.collectAsStateWithLifecycle()
     val uriHandler = LocalUriHandler.current
@@ -77,51 +78,48 @@ fun ArticleDetailScreen(
 }
 
 @Composable
-fun ArticleDetailScreenInternal(
+private fun ArticleDetailScreenInternal(
     state: ArticleDetailScreenState,
+    actions: ArticleDetailScreenActions,
     modifier: Modifier = Modifier,
-    actions: ArticleDetailScreenActions
 ) {
     when (state) {
+        ArticleDetailScreenState.Loading -> GenericScreenLoading(modifier = modifier)
+        is ArticleDetailScreenState.Error -> GenericErrorScreen()
+
         is ArticleDetailScreenState.Content -> ArticleDetailScreenContent(
             article = state.article,
             modifier = modifier,
             onRedirectToWebClick = actions::onRedirectToWebClick,
-            onShareClick = actions::onShareArticleClick
+            onShareClick = actions::onShareArticleClick,
         )
-
-        is ArticleDetailScreenState.Error -> {
-            // TODO add error screen
-        }
-
-        ArticleDetailScreenState.Loading -> GenericScreenLoading(modifier = modifier)
     }
 }
 
 @Composable
-fun ArticleDetailScreenContent(
+private fun ArticleDetailScreenContent(
     article: Article,
-    modifier: Modifier = Modifier,
     onRedirectToWebClick: (String) -> Unit,
     onShareClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         CoilLoadingImage(
             imageUrl = article.imageUrl,
             modifier = Modifier
                 .fillMaxWidth()
                 .shadow(elevation = 16.dp)
-                .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                .clip(RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)),
         )
         Column(
             modifier = Modifier.padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            ArticleDetailScreenActionHeader(
+            ArticleDetailHeadline(
                 section = article.section,
                 webUrl = article.webUrl,
                 onRedirectToWebClick = onRedirectToWebClick,
@@ -129,22 +127,22 @@ fun ArticleDetailScreenContent(
             )
             Text(
                 text = article.title,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
             )
             Spacer(
-                modifier = Modifier.height(8.dp)
+                modifier = Modifier.height(8.dp),
             )
             Text(
                 text = article.firstParagraph,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.End,
             ) {
                 Text(
                     text = article.publishedDate.toString(),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
                 )
             }
         }
@@ -152,7 +150,7 @@ fun ArticleDetailScreenContent(
 }
 
 @Composable
-private fun ArticleDetailScreenActionHeader(
+private fun ArticleDetailHeadline(
     section: String,
     webUrl: String,
     onRedirectToWebClick: (String) -> Unit,
@@ -162,11 +160,11 @@ private fun ArticleDetailScreenActionHeader(
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = section,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
         Row(
             horizontalArrangement = Arrangement.End,

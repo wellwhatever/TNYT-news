@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.news.feature.article.ui.NavigatorScope
 import com.example.news.shared.code.model.Article
+import com.example.news.shared.core.network.DomainException
 import com.example.news.shared.domain.articles.GetArticlesUseCase
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.Flow
@@ -16,10 +17,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.time.Duration.Companion.seconds
 
 class ArticleListViewModel internal constructor(
     private val getMostViewedArticles: GetArticlesUseCase,
+    private val errorMapper: ArticleListErrorMapper,
     navigation: ArticleListNavigationImpl,
 ) : ViewModel(),
     NavigatorScope,
@@ -27,14 +30,14 @@ class ArticleListViewModel internal constructor(
     ArticleListNavigation by navigation {
     override val navigationScope = viewModelScope
 
-    private val errorFlow = MutableStateFlow<String?>(null)
+    private val errorFlow = MutableStateFlow<DomainException?>(null)
     private val searchQueryFlow = MutableStateFlow("")
 
     private val filteredArticles: Flow<List<Article>?> = searchQueryFlow
         .debounce(0.5.seconds)
         .transformLatest {
             emit(null)
-            emit(getMostViewedArticles(it))
+            emit(getFilteredArticles(it))
         }
 
     private val searchBarState = searchQueryFlow.map {
@@ -46,7 +49,7 @@ class ArticleListViewModel internal constructor(
         errorFlow,
     ) { articles, error ->
         when {
-            error != null -> ArticleListState.Error(error)
+            error != null -> errorMapper.mapToArticleListError(error)
             articles == null -> ArticleListState.Loading
             else -> ArticleListState.Content(
                 articles = articles.toImmutableList(),
@@ -68,6 +71,17 @@ class ArticleListViewModel internal constructor(
         initialValue = ArticleListScreenState.Loading,
     )
 
+    private suspend fun getFilteredArticles(query: String): List<Article>? {
+        return try {
+            errorFlow.value = null
+            getMostViewedArticles(query)
+        } catch (exception: DomainException) {
+            Timber.e(exception)
+            errorFlow.value = exception
+            null
+        }
+    }
+
     override fun onQueryChange(updatedQuery: String) {
         viewModelScope.launch {
             searchQueryFlow.value = updatedQuery
@@ -82,6 +96,11 @@ class ArticleListViewModel internal constructor(
 
     override fun onArticleClick(articleId: String) {
         navigateToArticleDetail(articleId)
+    }
+
+    override fun onReloadClick() {
+        errorFlow.value = null
+        searchQueryFlow.value = ""
     }
 
     override fun onBackClick() {

@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun TNYTApp(
     modifier: Modifier = Modifier,
-    viewModel: MainViewModel = koinViewModel()
+    viewModel: MainViewModel = koinViewModel(),
 ) {
     val activityState = viewModel.state.collectAsStateWithLifecycle()
 
@@ -55,7 +55,7 @@ fun TNYTApp(
             TNYTAppInternal(
                 activityState = activityState.value,
                 showSnackbar = viewModel::showSnackbar,
-                hideSnackbar = viewModel::hideSnackbar
+                hideSnackbar = viewModel::hideSnackbar,
             )
         }
     }
@@ -64,11 +64,11 @@ fun TNYTApp(
 @ExperimentalMaterial3Api
 @Composable
 private fun TNYTAppInternal(
-    modifier: Modifier = Modifier,
     activityState: MainActivityState,
     showSnackbar: () -> Unit,
     hideSnackbar: () -> Unit,
-    engine: NavHostEngine = rememberNavHostEngine()
+    modifier: Modifier = Modifier,
+    engine: NavHostEngine = rememberNavHostEngine(),
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val navController = engine.rememberNavController()
@@ -82,7 +82,7 @@ private fun TNYTAppInternal(
         if (activityState.showSnackbar) {
             val result = snackbarHostState.showSnackbar(
                 message = notImplementedMessage,
-                withDismissAction = true
+                withDismissAction = true,
             )
             if (result == SnackbarResult.Dismissed) {
                 hideSnackbar()
@@ -96,7 +96,7 @@ private fun TNYTAppInternal(
             NewsTopAppBar(
                 appState = appState,
                 navigateBack = navController::popBackStack,
-                onMoreClick = showSnackbar
+                onMoreClick = showSnackbar,
             )
         },
         snackbarHost = {

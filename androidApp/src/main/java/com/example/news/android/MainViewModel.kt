@@ -16,7 +16,7 @@ class MainViewModel : ViewModel(), MainActivityActions {
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5000),
-        initialValue = MainActivityState(false)
+        initialValue = MainActivityState(false),
     )
 
     override fun showSnackbar() {
@@ -29,5 +29,5 @@ class MainViewModel : ViewModel(), MainActivityActions {
 }
 
 data class MainActivityState(
-    val showSnackbar: Boolean
+    val showSnackbar: Boolean,
 )

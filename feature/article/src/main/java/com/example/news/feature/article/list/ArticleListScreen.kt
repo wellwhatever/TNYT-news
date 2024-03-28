@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.news.feature.article.R
 import com.example.news.feature.article.destinations.ArticleDetailScreenDestination
+import com.example.news.feature.article.ui.GenericErrorScreen
 import com.example.news.feature.article.ui.GenericScreenLoading
 import com.example.news.shared.code.model.Article
 import com.ramcosta.composedestinations.annotation.Destination
@@ -96,6 +97,7 @@ private fun ArticleListScreenInternal(
                 actions = actions,
             ) {
                 ArticleListContent(
+                    modifier = Modifier.fillMaxSize(),
                     state = state.articleListState,
                     actions = actions,
                 )
@@ -112,9 +114,11 @@ private fun ArticleListContent(
 ) {
     when (state) {
         ArticleListState.Loading -> GenericScreenLoading(modifier = modifier)
-        is ArticleListState.Error -> {
-            // TODO implement error handling!
-        }
+        is ArticleListState.Error -> ArticleListError(
+            modifier = modifier,
+            errorState = state,
+            onReloadClick = actions::onReloadClick,
+        )
 
         is ArticleListState.Content -> ArticleListContent(
             modifier = modifier,
@@ -233,9 +237,8 @@ private fun ArticleListItem(
                 text = article.title,
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 3,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
             )
-            // TODO fix this
             Text(
                 text = article.publishedDate.toString(),
                 style = MaterialTheme.typography.titleSmall,
@@ -266,6 +269,41 @@ private fun ArticleListEmpty(
             text = stringResource(id = R.string.article_search_no_results),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.headlineSmall,
+        )
+    }
+}
+
+@Composable
+private fun ArticleListError(
+    errorState: ArticleListState.Error,
+    onReloadClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    when (errorState) {
+        ArticleListState.Error.Unexpected -> GenericErrorScreen(
+            modifier = modifier,
+            onReloadClick = onReloadClick,
+        )
+
+        ArticleListState.Error.TooManyRequests -> ArticleListTooManyRequestsError(
+            modifier = modifier,
+        )
+    }
+}
+
+@Composable
+private fun ArticleListTooManyRequestsError(
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            text = stringResource(id = R.string.article_list_too_many_requests),
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineMedium,
         )
     }
 }

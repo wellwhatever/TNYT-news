@@ -20,6 +20,7 @@ internal class ArticleLocalDataSource(
             .map(converter::toDomain)
 
     suspend fun saveArticles(articles: List<Article>) {
+        databaseQueries.deleteAll()
         articles.map(converter::fromDomain).forEach { databaseQueries.insertArticle(it) }
     }
 }

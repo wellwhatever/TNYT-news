@@ -1,9 +1,9 @@
 package com.example.news.shared.core.network
 
-sealed class ApiException : RuntimeException()
-class UnexpectedException : ApiException()
-class NoInternetException : ApiException()
-
-class HttpExceptionDomain(val code: Int) : ApiException()
+sealed class DomainException : RuntimeException()
+data object UnexpectedException : DomainException()
+data object NoInternetException : DomainException()
+data object TooManyRequests : DomainException()
+data object ServerException : DomainException()
 
 expect fun Throwable.isNoInternet(): Boolean

@@ -5,7 +5,7 @@ import com.example.news.shared.code.model.Article
 import kotlinx.coroutines.flow.Flow
 
 class GetArticleUseCase(
-    private val articleRepository: ArticlesRepository
+    private val articleRepository: ArticlesRepository,
 ) {
     operator fun invoke(id: String): Flow<Article?> =
         articleRepository.getArticleFlow(id)

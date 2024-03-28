@@ -1,5 +1,6 @@
 package com.example.news.feature.article.list.di
 
+import com.example.news.feature.article.list.ArticleListErrorMapper
 import com.example.news.feature.article.list.ArticleListNavigationImpl
 import com.example.news.feature.article.list.ArticleListViewModel
 import com.example.news.shared.domain.di.articleDomainModule
@@ -13,4 +14,5 @@ val articleListModule = module {
     viewModelOf(::ArticleListViewModel)
 
     factoryOf(::ArticleListNavigationImpl)
+    factoryOf(::ArticleListErrorMapper)
 }

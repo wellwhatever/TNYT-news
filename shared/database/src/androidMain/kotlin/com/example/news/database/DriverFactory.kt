@@ -11,7 +11,7 @@ actual class DriverFactory(private val context: Context) {
         return AndroidSqliteDriver(
             ArticleDatabase.Schema.synchronous(),
             context,
-            null // behave like in-memory
+            null, // behave like in-memory
         )
     }
 }

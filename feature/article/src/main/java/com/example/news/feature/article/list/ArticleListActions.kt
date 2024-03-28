@@ -10,6 +10,8 @@ internal interface ArticleListScreenActions : ArticleListActions, ArticleSearchB
 @Immutable
 internal interface ArticleListActions {
     fun onArticleClick(articleId: String)
+
+    fun onReloadClick()
 }
 
 @Immutable

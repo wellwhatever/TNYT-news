@@ -17,9 +17,9 @@ import androidx.compose.ui.text.style.TextOverflow
 @Composable
 internal fun NewsTopAppBar(
     appState: NewsAppState,
-    colors: TopAppBarColors = NewsTopAppBarColors(),
     navigateBack: () -> Unit,
-    onMoreClick: () -> Unit
+    onMoreClick: () -> Unit,
+    colors: TopAppBarColors = NewsTopAppBarColors(),
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -27,7 +27,7 @@ internal fun NewsTopAppBar(
                 stringResource(id = appState.navigationTitleRes),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onPrimary
+                color = MaterialTheme.colorScheme.onPrimary,
             )
         },
         navigationIcon = {
@@ -36,7 +36,7 @@ internal fun NewsTopAppBar(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_arrow_back_24),
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onPrimary
+                        tint = MaterialTheme.colorScheme.onPrimary,
                     )
                 }
             }
@@ -46,11 +46,11 @@ internal fun NewsTopAppBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_more_vert_24),
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onPrimary
+                    tint = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         },
-        colors = colors
+        colors = colors,
     )
 }
 
@@ -58,5 +58,5 @@ internal fun NewsTopAppBar(
 @Composable
 private fun NewsTopAppBarColors(): TopAppBarColors =
     TopAppBarDefaults.centerAlignedTopAppBarColors(
-        containerColor = MaterialTheme.colorScheme.primary
+        containerColor = MaterialTheme.colorScheme.primary,
     )
