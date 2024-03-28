@@ -10,13 +10,22 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.news.android.navigation.AppNavGraph
 import com.example.news.android.theme.TNYTTheme
 import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.rememberNavHostEngine
+import com.ramcosta.composedestinations.spec.NavHostEngine
+import org.koin.androidx.compose.koinViewModel
 
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
@@ -30,24 +39,82 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@ExperimentalMaterial3Api
 @Composable
 fun TNYTApp(
     modifier: Modifier = Modifier,
+    viewModel: MainViewModel = koinViewModel(),
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background,
-    ) {
-        Scaffold(
-            snackbarHost = {
-                SnackbarHost(snackbarHostState)
-            },
+    val activityState = viewModel.state.collectAsStateWithLifecycle()
+
+    TNYTTheme {
+        Surface(
+            modifier = modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background,
         ) {
-            DestinationsNavHost(
-                modifier = Modifier.padding(it),
-                navGraph = AppNavGraph,
+            TNYTAppInternal(
+                activityState = activityState.value,
+                showSnackbar = viewModel::showSnackbar,
+                hideSnackbar = viewModel::hideSnackbar,
             )
         }
     }
+}
+
+@ExperimentalMaterial3Api
+@Composable
+private fun TNYTAppInternal(
+    activityState: MainActivityState,
+    showSnackbar: () -> Unit,
+    hideSnackbar: () -> Unit,
+    modifier: Modifier = Modifier,
+    engine: NavHostEngine = rememberNavHostEngine(),
+) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val navController = engine.rememberNavController()
+    val backStackEntry = navController.currentBackStackEntryAsState()
+    val appState = rememberAppState(
+        currentDestination = backStackEntry.value?.destination,
+    )
+    val notImplementedMessage = stringResource(id = R.string.not_implemented_general)
+
+    LaunchedEffect(activityState.showSnackbar) {
+        if (activityState.showSnackbar) {
+            val result = snackbarHostState.showSnackbar(
+                message = notImplementedMessage,
+                withDismissAction = true,
+            )
+            if (result == SnackbarResult.Dismissed) {
+                hideSnackbar()
+            }
+        }
+    }
+
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            NewsTopAppBar(
+                appState = appState,
+                navigateBack = navController::popBackStack,
+                onMoreClick = showSnackbar,
+            )
+        },
+        snackbarHost = {
+            SnackbarHost(snackbarHostState)
+        },
+    ) {
+        DestinationsNavHost(
+            modifier = Modifier.padding(it),
+            navGraph = AppNavGraph,
+            engine = engine,
+            navController = navController,
+        )
+    }
+}
+
+@Composable
+internal fun rememberAppState(
+    currentDestination: NavDestination?,
+) = remember(currentDestination) {
+    NewsAppState(currentDestination)
 }

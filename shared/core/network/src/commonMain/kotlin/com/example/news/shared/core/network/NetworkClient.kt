@@ -22,6 +22,7 @@ import kotlinx.serialization.json.Json
 class NetworkClient(
     private val baseUrl: String,
     private val apiKey: String,
+    val domainExceptionMapper: DomainExceptionMapper,
     httpClient: HttpClient,
 ) {
     val httpClientInternal = httpClient.config {
@@ -69,24 +70,20 @@ class NetworkClient(
     }
 
     suspend inline fun <reified T : Any> safeCall(callHttpMethod: () -> HttpResponse): T {
-        val response = mapApiExceptions { callHttpMethod() }
+        val response = mapNetworkExceptions { callHttpMethod() }
         return if (response.status.isSuccess()) {
             response.body()
         } else {
-            throw response.toHttpException()
+            throw domainExceptionMapper.toDomainException(response)
         }
     }
 
-    inline fun mapApiExceptions(block: () -> HttpResponse): HttpResponse {
+    inline fun mapNetworkExceptions(block: () -> HttpResponse): HttpResponse {
         return runCatching(block).getOrElse { exception ->
             throw when {
-                exception.isNoInternet() -> NoInternetException()
-                else -> UnexpectedException()
+                exception.isNoInternet() -> NoInternetException
+                else -> UnexpectedException
             }
         }
-    }
-
-    fun HttpResponse.toHttpException(): HttpExceptionDomain {
-        return HttpExceptionDomain(code = status.value)
     }
 }

@@ -12,6 +12,7 @@ dependencies {
     compileOnly(libs.kotlin.gradlePlugin)
     compileOnly(libs.firebase.gradlePlugin)
     compileOnly(libs.ksp.gradlePlugin)
+    compileOnly(libs.sqldelight.gradlePlugin)
 }
 
 group = "com.example.news.build-logic"
@@ -49,6 +50,10 @@ gradlePlugin {
         register("kotlinMultiplatform") {
             id = "news.kotlin.multiplatform.library"
             implementationClass = "KotlinMultiplatformLibraryConventionPlugin"
+        }
+        register("sqldelight") {
+            id = "news.database.sqldelight"
+            implementationClass = "SqlDelightConventionPlugin"
         }
     }
 }

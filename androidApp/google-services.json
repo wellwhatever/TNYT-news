@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "483363573344",
+    "project_id": "tnytnews",
+    "storage_bucket": "tnytnews.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:483363573344:android:b7b1b29452dde14b8bbd05",
+        "android_client_info": {
+          "package_name": "com.example.news.android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo_UDskQNq-CMX4CJqXJwhS6Go4jl2UFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

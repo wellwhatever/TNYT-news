@@ -5,8 +5,10 @@ import kotlinx.collections.immutable.ImmutableList
 
 sealed interface ArticleListState {
     data object Loading : ArticleListState
-
-    data class Error(val message: String) : ArticleListState
+    sealed interface Error : ArticleListState {
+        data object Unexpected : Error
+        data object TooManyRequests : Error
+    }
 
     data class Content(
         val articles: ImmutableList<Article>,
