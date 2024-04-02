@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,6 +40,7 @@ import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
 
 @RootNavGraph(start = true)
@@ -51,9 +53,11 @@ fun ArticleListScreen(
 ) {
     val state = viewModel.articleListScreenState.collectAsStateWithLifecycle()
 
-    CollectNavigationEvents(
-        navigator = navigator,
-        navigationActions = viewModel as ArticleListNavigation,
+    CollectScreenEvents(
+        eventFlow = viewModel.eventFlow,
+        navigateToDetail = {
+            navigator.navigate(ArticleDetailScreenDestination(it))
+        },
     )
 
     ArticleListScreenInternal(
@@ -64,20 +68,16 @@ fun ArticleListScreen(
 }
 
 @Composable
-private fun CollectNavigationEvents(
-    navigator: DestinationsNavigator,
-    navigationActions: ArticleListNavigation,
+private fun CollectScreenEvents(
+    eventFlow: Flow<ArticleListEvent>,
+    navigateToDetail: (String) -> Unit,
 ) {
-    navigationActions.navigateToArticleDetail.CollectNavigationEvent {
-        navigator.navigate(
-            ArticleDetailScreenDestination(
-                detailId = it,
-            ),
-        )
-    }
-
-    navigationActions.navigateBack.CollectNavigationEvent {
-        navigator.popBackStack()
+    LaunchedEffect(Unit) {
+        eventFlow.collect { event ->
+            if (event is ArticleListEvent.NavigateToDetail) {
+                navigateToDetail(event.articleId)
+            }
+        }
     }
 }
 

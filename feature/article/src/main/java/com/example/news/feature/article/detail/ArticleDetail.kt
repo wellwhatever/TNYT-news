@@ -33,6 +33,8 @@ import com.example.news.feature.article.ui.GenericScreenLoading
 import com.example.news.shared.code.model.Article
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
 @Suppress("UnusedParameter")
@@ -47,8 +49,11 @@ fun ArticleDetailScreen(
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        viewModel.eventShareArticle.collect {
+    CollectScreenEvents(
+        eventFlow = viewModel.eventFlow,
+        navigateBack = navigator::popBackStack,
+        onRedirectToWeb = uriHandler::openUri,
+        onShareArticle = {
             val sendIntent = Intent().apply {
                 action = Intent.ACTION_SEND
                 putExtra(Intent.EXTRA_TEXT, it)
@@ -56,25 +61,31 @@ fun ArticleDetailScreen(
             }
             val shareIntent = Intent.createChooser(sendIntent, null)
             context.startActivity(shareIntent)
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.eventRedirectToWeb.collect {
-            uriHandler.openUri(it)
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        viewModel.eventNavigateBack.collect {
-            navigator.popBackStack()
-        }
-    }
+        },
+    )
 
     ArticleDetailScreenInternal(
         state = state.value,
         actions = viewModel as ArticleDetailScreenActions,
     )
+}
+
+@Composable
+private fun CollectScreenEvents(
+    eventFlow: Flow<ArticleDetailEvent>,
+    navigateBack: () -> Unit,
+    onRedirectToWeb: (String) -> Unit,
+    onShareArticle: (String) -> Unit,
+) {
+    LaunchedEffect(Unit) {
+        eventFlow.collectLatest {
+            when (it) {
+                is ArticleDetailEvent.RedirectToWeb -> onRedirectToWeb(it.url)
+                is ArticleDetailEvent.ShareArticle -> onShareArticle(it.articleUrl)
+                ArticleDetailEvent.NavigateBack -> navigateBack()
+            }
+        }
+    }
 }
 
 @Composable
