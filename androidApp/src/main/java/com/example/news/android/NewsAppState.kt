@@ -6,7 +6,6 @@ import com.example.news.feature.article.destinations.ArticleListScreenDestinatio
 
 internal class NewsAppState(
     navDestination: NavDestination?,
-    val showSnackBar: Boolean = false,
 ) {
     val showNavigationIcon = navDestination.isHomeScreen().not()
 

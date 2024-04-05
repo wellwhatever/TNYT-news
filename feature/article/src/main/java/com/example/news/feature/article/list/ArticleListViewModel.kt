@@ -2,7 +2,6 @@ package com.example.news.feature.article.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.news.feature.article.ui.NavigatorScope
 import com.example.news.shared.code.model.Article
 import com.example.news.shared.core.common.stateInVmWithInitial
 import com.example.news.shared.core.network.DomainException
@@ -25,10 +24,7 @@ class ArticleListViewModel internal constructor(
     private val getMostViewedArticles: GetArticlesUseCase,
     private val errorMapper: ArticleListErrorMapper,
 ) : ViewModel(),
-    NavigatorScope,
     ArticleListScreenActions {
-    override val navigationScope = viewModelScope
-
     private val errorFlow = MutableStateFlow<DomainException?>(null)
     private val searchQueryFlow = MutableStateFlow("")
 
