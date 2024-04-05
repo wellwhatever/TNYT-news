@@ -12,8 +12,17 @@ android {
         versionCode = 1
         versionName = "1.0"
     }
+    signingConfigs {
+        create("release") {
+            // TODO extract to secrets
+            keyAlias = "key0"
+            keyPassword = "password"
+            storeFile = File("$rootDir/keys/keystore.jks")
+            storePassword = "password"
+        }
+    }
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
         }
     }
