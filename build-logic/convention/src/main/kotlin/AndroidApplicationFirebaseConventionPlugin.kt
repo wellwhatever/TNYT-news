@@ -1,6 +1,5 @@
-import com.android.build.api.variant.ApplicationAndroidComponentsExtension
-import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import com.example.news.versionCatalog
+import com.google.firebase.appdistribution.gradle.AppDistributionExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -13,6 +12,7 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.google.gms.google-services")
                 apply("com.google.firebase.crashlytics")
+                apply("com.google.firebase.appdistribution")
             }
 
             dependencies {
@@ -20,6 +20,13 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
                 add("implementation", platform(bom))
                 "implementation"(libs.findLibrary("firebase-analytics").get())
                 "implementation"(libs.findLibrary("firebase-crashlytics").get())
+            }
+
+            extensions.configure<AppDistributionExtension> {
+                serviceCredentialsFile =
+                    "${rootProject.projectDir}/tnytnews-firebase-adminsdk-5tj17-8f449b669c.json"
+                artifactType = "APK"
+                group = "testers"
             }
         }
     }

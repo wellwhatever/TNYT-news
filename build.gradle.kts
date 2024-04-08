@@ -14,7 +14,8 @@ plugins {
             sqldelight,
             skie,
             firebase.crashlytics,
-            safeargs
+            firebase.appdistribution,
+            safeargs,
         ).forEach {
             alias(it) apply false
         }

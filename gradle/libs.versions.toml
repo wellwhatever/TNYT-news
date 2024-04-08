@@ -7,7 +7,8 @@ targetSdk = "34"
 
 # Gradle plugins
 androidGradlePlugin = "8.2.0"
-firebaseGradlePlugin = "2.9.9"
+crashlyticsGradlePlugin = "2.9.9"
+appdistributionGradlePlugin = "4.2.0"
 gms = "4.4.1"
 skie = "0.6.1"
 detekt = "1.23.5"
@@ -59,7 +60,7 @@ turbine = "1.0.0"
 kotest = "5.8.0"
 
 # Firebase
-firebaseBom = "32.7.4"
+firebaseBom = "32.8.0"
 
 # Desugaring
 desugaring = "2.0.4"
@@ -76,7 +77,8 @@ timber = "5.0.1"
 # Build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
-firebase-gradlePlugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseGradlePlugin" }
+firebase-crashlytics-gradlePlugin = { module = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "crashlyticsGradlePlugin" }
+firebase-appdistribution-gradlePlugin = { module = "com.google.firebase:firebase-appdistribution-gradle", version.ref = "appdistributionGradlePlugin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 sqldelight-gradlePlugin = { module = "app.cash.sqldelight:gradle-plugin", version.ref = "sqlDelight" }
 android-gms = { module = "com.google.gms:google-services", version.ref = "gms" }
@@ -182,7 +184,8 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseGradlePlugin" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsGradlePlugin" }
+firebase-appdistribution = { id = "com.google.firebase.appdistribution", version.ref = "appdistributionGradlePlugin" }
 safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "safeargs" }
 
 # Application defined plugins
