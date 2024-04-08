@@ -29,9 +29,9 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Upload actifact to Firebase App Distribution
-        uses: hasretsariyer/firebase-app-distribution-github-action@v1
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          app_id: ${{secrets.FIREBASE_APP_ID}}
-          firebase_token: ${{ secrets.FIREBASE_DISTRIBUTION_TOKEN }}
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           file: androidApp/build/outputs/apk/release/androidApp-release.apk
