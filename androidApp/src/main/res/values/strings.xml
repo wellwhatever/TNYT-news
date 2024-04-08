@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="top_app_bar_home_title">News</string>
+    <string name="top_app_bar_other_title">Detail</string>
+    <string name="not_implemented_general">Not implemented yet!</string>
+</resources>

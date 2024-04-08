@@ -10,10 +10,12 @@ kotlin {
             implementation(libs.kotlin.datetime)
             implementation(libs.ktor.core)
             implementation(libs.koin.multiplatform)
+            implementation(libs.sqldelight.coroutines)
 
             implementation(projects.shared.core.network)
             implementation(projects.shared.core.common)
             implementation(projects.shared.core.model)
+            implementation(projects.shared.database)
         }
     }
 }

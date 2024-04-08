@@ -5,7 +5,7 @@ plugins {
 kotlin {
     sourceSets {
         androidMain.dependencies {
-            implementation(libs.compose.runtime)
+            implementation(libs.lifecycle.viewmodel)
         }
         commonMain.dependencies {
             implementation(libs.koin.multiplatform)

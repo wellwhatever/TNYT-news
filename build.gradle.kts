@@ -11,10 +11,11 @@ plugins {
             android.gms,
             kotlin.ksp,
             kotlin.serialization,
-            sqlDelight,
+            sqldelight,
             skie,
             firebase.crashlytics,
-            safeargs
+            firebase.appdistribution,
+            safeargs,
         ).forEach {
             alias(it) apply false
         }

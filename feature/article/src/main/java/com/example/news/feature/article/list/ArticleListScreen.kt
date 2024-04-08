@@ -3,7 +3,6 @@ package com.example.news.feature.article.list
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,15 +13,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,15 +28,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.news.feature.article.R
 import com.example.news.feature.article.destinations.ArticleDetailScreenDestination
+import com.example.news.feature.article.ui.GenericErrorScreen
+import com.example.news.feature.article.ui.GenericScreenLoading
 import com.example.news.shared.code.model.Article
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.flow.Flow
 import org.koin.androidx.compose.koinViewModel
 
 @RootNavGraph(start = true)
@@ -51,9 +53,11 @@ fun ArticleListScreen(
 ) {
     val state = viewModel.articleListScreenState.collectAsStateWithLifecycle()
 
-    CollectNavigationEvents(
-        navigator = navigator,
-        navigationActions = viewModel as ArticleListNavigation,
+    CollectScreenEvents(
+        eventFlow = viewModel.eventFlow,
+        navigateToDetail = {
+            navigator.navigate(ArticleDetailScreenDestination(it))
+        },
     )
 
     ArticleListScreenInternal(
@@ -64,20 +68,16 @@ fun ArticleListScreen(
 }
 
 @Composable
-private fun CollectNavigationEvents(
-    navigator: DestinationsNavigator,
-    navigationActions: ArticleListNavigation,
+private fun CollectScreenEvents(
+    eventFlow: Flow<ArticleListEvent>,
+    navigateToDetail: (String) -> Unit,
 ) {
-    navigationActions.navigateToArticleDetail.CollectNavigationEvent {
-        navigator.navigate(
-            ArticleDetailScreenDestination(
-                detailId = it,
-            ),
-        )
-    }
-
-    navigationActions.navigateBack.CollectNavigationEvent {
-        navigator.popBackStack()
+    LaunchedEffect(Unit) {
+        eventFlow.collect { event ->
+            if (event is ArticleListEvent.NavigateToDetail) {
+                navigateToDetail(event.articleId)
+            }
+        }
     }
 }
 
@@ -88,7 +88,7 @@ private fun ArticleListScreenInternal(
     modifier: Modifier = Modifier,
 ) {
     when (state) {
-        ArticleListScreenState.Loading -> FullScreenLoading(modifier = modifier)
+        ArticleListScreenState.Loading -> GenericScreenLoading(modifier = modifier)
 
         is ArticleListScreenState.Content -> {
             ArticleSearchBar(
@@ -97,6 +97,7 @@ private fun ArticleListScreenInternal(
                 actions = actions,
             ) {
                 ArticleListContent(
+                    modifier = Modifier.fillMaxSize(),
                     state = state.articleListState,
                     actions = actions,
                 )
@@ -112,10 +113,12 @@ private fun ArticleListContent(
     modifier: Modifier = Modifier,
 ) {
     when (state) {
-        ArticleListState.Loading -> FullScreenLoading(modifier = modifier)
-        is ArticleListState.Error -> {
-            // TODO implement error handling!
-        }
+        ArticleListState.Loading -> GenericScreenLoading(modifier = modifier)
+        is ArticleListState.Error -> ArticleListError(
+            modifier = modifier,
+            errorState = state,
+            onReloadClick = actions::onReloadClick,
+        )
 
         is ArticleListState.Content -> ArticleListContent(
             modifier = modifier,
@@ -151,7 +154,7 @@ private fun ArticleSearchBar(
             trailingIcon = @Composable {
                 Icon(
                     modifier = Modifier.clickable(
-                        onClick = actions::onBackClick,
+                        onClick = actions::onClearQueryClick,
                         interactionSource = remember { MutableInteractionSource() },
                         indication = rememberRipple(bounded = false),
                     ),
@@ -197,7 +200,6 @@ private fun ArticleList(
             items = articles,
             key = { _, item -> item.id },
         ) { index, article ->
-            ListItem(headlineContent = { /*TODO*/ })
             ArticleListItem(
                 article = article,
                 onArticleClick = onArticleClick,
@@ -234,8 +236,9 @@ private fun ArticleListItem(
             Text(
                 text = article.title,
                 style = MaterialTheme.typography.titleMedium,
+                maxLines = 3,
+                overflow = TextOverflow.Ellipsis,
             )
-            // TODO fix this
             Text(
                 text = article.publishedDate.toString(),
                 style = MaterialTheme.typography.titleSmall,
@@ -270,14 +273,37 @@ private fun ArticleListEmpty(
     }
 }
 
-// TODO extract from here
 @Composable
-fun FullScreenLoading(modifier: Modifier = Modifier) {
-    Box(
+private fun ArticleListError(
+    errorState: ArticleListState.Error,
+    onReloadClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    when (errorState) {
+        ArticleListState.Error.Unexpected -> GenericErrorScreen(
+            modifier = modifier,
+            onReloadClick = onReloadClick,
+        )
+
+        ArticleListState.Error.TooManyRequests -> ArticleListTooManyRequestsError(
+            modifier = modifier,
+        )
+    }
+}
+
+@Composable
+private fun ArticleListTooManyRequestsError(
+    modifier: Modifier = Modifier,
+) {
+    Column(
         modifier = modifier,
+        verticalArrangement = Arrangement.Center,
     ) {
-        CircularProgressIndicator(
-            modifier = Modifier.align(Alignment.Center),
+        Text(
+            text = stringResource(id = R.string.article_list_too_many_requests),
+            color = MaterialTheme.colorScheme.primary,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineMedium,
         )
     }
 }
