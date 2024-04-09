@@ -22,6 +22,7 @@ class AndroidApplicationFirebaseConventionPlugin : Plugin<Project> {
                 "implementation"(libs.findLibrary("firebase-crashlytics").get())
             }
 
+            // Extract it to secrets!
             extensions.configure<AppDistributionExtension> {
                 serviceCredentialsFile =
                     "${rootProject.projectDir}/tnytnews-firebase-adminsdk-5tj17-8f449b669c.json"
