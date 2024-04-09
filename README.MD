@@ -84,13 +84,13 @@ and reuse of build-logic.
 
 ## Detekt
 
-**Detekt** static analysis workflow is used in combination with **Review Dog** to check Github pull
-requests.
+Project has workflow to run **Detekt** static analysis in combination with **Review Dog** to analyse Github pull
+requests and write review comments in case of any warnings.
 
 ## Testing
-
+TODO
 Describe testing here!
 
 ## App Distribution
 
-Describe app distribution here!
+Application is distributed using Firebase App Distribution. GitHub Actions is set up to automatically distribute release version of application every time something is pushed with 'v-' tag in 'release/...' branch. 
