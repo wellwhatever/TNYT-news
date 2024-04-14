@@ -17,13 +17,13 @@ class ArticleLocalDataSourceImplTest : FunSpec({
         database = ArticleDatabase(
             JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY).apply {
                 ArticleDatabase.Schema.create(this).await()
-            }
+            },
         )
         converter = ArticleEntityConverter()
         articleLocalDataSource = ArticleLocalDataSourceImpl(
             database.articleDatabaseQueries,
             converter,
-            UnconfinedTestDispatcher()
+            UnconfinedTestDispatcher(),
         )
     }
     test("getArticleFlow should emit null for unknown article") {

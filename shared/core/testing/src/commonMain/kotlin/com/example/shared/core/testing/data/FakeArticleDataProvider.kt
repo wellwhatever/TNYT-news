@@ -13,7 +13,7 @@ object FakeArticleDataProvider {
         source = "Sample Source 1",
         imageUrl = "https://sample-url.com/image1.jpg",
         webUrl = "https://sample-url.com/article1",
-        desk = "Sample Desk 1"
+        desk = "Sample Desk 1",
     )
 
     val article2 = Article(
@@ -25,7 +25,7 @@ object FakeArticleDataProvider {
         source = "Sample Source 2",
         imageUrl = "https://sample-url.com/image2.jpg",
         webUrl = "https://sample-url.com/article2",
-        desk = "Sample Desk 2"
+        desk = "Sample Desk 2",
     )
 
     val article3 = Article(
@@ -37,7 +37,7 @@ object FakeArticleDataProvider {
         source = "Sample Source 3",
         imageUrl = "https://sample-url.com/image3.jpg",
         webUrl = "https://sample-url.com/article3",
-        desk = "Sample Desk 3"
+        desk = "Sample Desk 3",
     )
 
     val fakeArticles = listOf(article1, article2, article3)

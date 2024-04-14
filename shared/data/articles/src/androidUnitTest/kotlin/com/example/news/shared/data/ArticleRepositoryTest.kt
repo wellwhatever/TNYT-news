@@ -7,7 +7,6 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.flow.first
 
-
 class ArticleRepositoryTest : FunSpec({
     lateinit var remoteDataSource: FakeArticleRemoteDataSource
     lateinit var localDataSource: FakeArticleLocalDataSource

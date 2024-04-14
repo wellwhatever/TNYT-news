@@ -23,24 +23,27 @@ class ArticleRemoteDataSourceImplTest : FunSpec({
                 baseUrl = "https://testurl.com",
                 apiKey = "testApiKey",
                 domainExceptionMapper = FakeDomainExceptionMapper(),
-                httpClient = HttpClient(MockEngine { request ->
-                    val content = ByteReadChannel(
-                        when (request.url.parameters["query"]) {
-                            "Lorem", "" -> {
-                                articlesResponse
-                            }
+                httpClient = HttpClient(
+                    MockEngine { request ->
+                        val content = ByteReadChannel(
+                            when (request.url.parameters["query"]) {
+                                "Lorem", "" -> {
+                                    ARTICLES_RESPONSE
+                                }
 
-                            else -> """{}"""
-                        }
-                    )
-                    respond(
-                        content = content, status = HttpStatusCode.OK, headers = headersOf(
-                            HttpHeaders.ContentType, "application/json"
+                                else -> """{}"""
+                            },
                         )
-                    )
-                })
+                        respond(
+                            content = content, status = HttpStatusCode.OK,
+                            headers = headersOf(
+                                HttpHeaders.ContentType, "application/json",
+                            ),
+                        )
+                    },
+                ),
             ),
-            articleConverter = ArticleResponseConverter("")
+            articleConverter = ArticleResponseConverter(""),
         )
     }
 
@@ -61,7 +64,7 @@ class ArticleRemoteDataSourceImplTest : FunSpec({
     }
 })
 
-const val articlesResponse = """
+const val ARTICLES_RESPONSE = """
 {
   "copyright": "Copyright 2024",
   "response": {
@@ -136,6 +139,6 @@ val parsedArticlesResponse = listOf(
         source = "New York Times",
         imageUrl = "https://example.com/image1.jpg",
         webUrl = "https://example.com/article",
-        desk = ""
-    )
+        desk = "",
+    ),
 )
