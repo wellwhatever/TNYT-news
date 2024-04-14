@@ -2,15 +2,17 @@ package com.example.news.shared.data.di
 
 import com.example.news.di.databaseModule
 import com.example.news.di.platformDatabaseModule
-import com.example.news.shared.code.data.ArticlesRepository
 import com.example.news.shared.core.common.di.IoDispatcher
+import com.example.news.shared.core.data.ArticleRepository
 import com.example.news.shared.core.di.networkPlatformModule
 import com.example.news.shared.core.network.DomainExceptionMapper
 import com.example.news.shared.core.network.NetworkClient
 import com.example.news.shared.data.ArticleRepositoryImpl
 import com.example.news.shared.data.local.ArticleEntityConverter
 import com.example.news.shared.data.local.ArticleLocalDataSource
+import com.example.news.shared.data.local.ArticleLocalDataSourceImpl
 import com.example.news.shared.data.remote.ArticleRemoteDataSource
+import com.example.news.shared.data.remote.ArticleRemoteDataSourceImpl
 import com.example.news.shared.data.remote.ArticleResponseConverter
 import com.example.news.shared.data.remote.RemoteDomainExceptionMapper
 import org.koin.core.module.dsl.factoryOf
@@ -36,15 +38,15 @@ val articleDataModule = module {
         )
     }
 
-    singleOf(::ArticleRemoteDataSource)
+    singleOf(::ArticleRemoteDataSourceImpl) bind ArticleRemoteDataSource::class
     single {
-        ArticleLocalDataSource(
+        ArticleLocalDataSourceImpl(
             get(),
             get(),
             get(named(IoDispatcher)),
         )
-    }
-    singleOf(::ArticleRepositoryImpl) bind ArticlesRepository::class
+    } bind ArticleLocalDataSource::class
+    singleOf(::ArticleRepositoryImpl) bind ArticleRepository::class
 
     factory {
         ArticleResponseConverter("https://www.nytimes.com/")

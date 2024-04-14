@@ -1,4 +1,4 @@
-package com.example.news.shared.code.model
+package com.example.news.shared.core.model
 
 import kotlinx.datetime.LocalDate
 

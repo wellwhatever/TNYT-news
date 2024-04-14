@@ -89,8 +89,11 @@ requests.
 
 ## Testing
 
-Describe testing here!
+Business logic of application is tested using **Kotest** framework. Fake doubles are used instead of
+mocks to provide fake dependencies to tested classes. To provide specific fake implementations,
+separate module **core/testing** was created.
 
 ## App Distribution
 
-Describe app distribution here!
+Github workflows are set to build and distribute application to Firebase App Distribution when
+**release/--** branch with **v-** tag is pushed to remote.

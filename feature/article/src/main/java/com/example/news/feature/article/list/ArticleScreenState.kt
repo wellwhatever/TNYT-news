@@ -1,6 +1,6 @@
 package com.example.news.feature.article.list
 
-import com.example.news.shared.code.model.Article
+import com.example.news.shared.core.model.Article
 import kotlinx.collections.immutable.ImmutableList
 
 sealed interface ArticleListState {

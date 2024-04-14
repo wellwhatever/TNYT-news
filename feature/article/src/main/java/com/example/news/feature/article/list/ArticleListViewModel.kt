@@ -2,8 +2,8 @@ package com.example.news.feature.article.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.news.shared.code.model.Article
 import com.example.news.shared.core.common.stateInVmWithInitial
+import com.example.news.shared.core.model.Article
 import com.example.news.shared.core.network.DomainException
 import com.example.news.shared.domain.articles.GetArticlesUseCase
 import kotlinx.collections.immutable.toImmutableList
@@ -12,13 +12,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import kotlin.time.Duration.Companion.seconds
 
 class ArticleListViewModel internal constructor(
     private val getMostViewedArticles: GetArticlesUseCase,
@@ -31,20 +30,27 @@ class ArticleListViewModel internal constructor(
     private val _eventFlow = Channel<ArticleListEvent>(Channel.CONFLATED)
     val eventFlow = _eventFlow.receiveAsFlow()
 
-    private val filteredArticles: Flow<List<Article>?> = searchQueryFlow
-        .debounce(0.5.seconds)
+    private val filteredArticles: Flow<List<Article>?> = searchQueryFlow.onEach {
+        println("filteredArticles: $it")
+    }
         .transformLatest {
             emit(null)
             emit(getFilteredArticles(it))
         }
 
-    private val searchBarState = searchQueryFlow.map {
+    val searchBarState = searchQueryFlow.onEach {
+        println("searchBarState, searchQueryFlow: $it")
+    }.map {
         ArticleSearchBarState(it)
     }
 
-    private val articleListState = combine(
-        filteredArticles,
-        errorFlow,
+    val articleListState = combine(
+        filteredArticles.onEach {
+            println("articleListState, filteredArticles: $it")
+        },
+        errorFlow.onEach {
+            println("articleListState, errorFlow: $it")
+        },
     ) { articles, error ->
         when {
             error != null -> errorMapper.mapToArticleListError(error)
@@ -56,14 +62,21 @@ class ArticleListViewModel internal constructor(
     }
 
     val articleListScreenState: StateFlow<ArticleListScreenState> = combine(
-        searchBarState,
-        articleListState,
+        searchBarState.onEach {
+            println("articleListScreenState, searchbarstate: $it")
+        },
+        articleListState.onEach {
+            println("articleListScreenState, articleListState: $it")
+        },
     ) { searchState, articleState ->
+        println("combined:" + "search:$searchState" + "articles:$articleState")
         ArticleListScreenState.Content(
             articleListState = articleState,
             searchBarState = searchState,
         )
     }.stateInVmWithInitial(ArticleListScreenState.Loading)
+
+    val screenStateFlow: Flow<ArticleListScreenState> = articleListScreenState
 
     private suspend fun getFilteredArticles(query: String): List<Article>? {
         return try {

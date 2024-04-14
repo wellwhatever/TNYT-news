@@ -1,7 +1,7 @@
 package com.example.news.shared.data.remote
 
-import com.example.news.shared.code.model.Article
 import com.example.news.shared.core.common.toLocalDate
+import com.example.news.shared.core.model.Article
 import com.example.news.shared.data.remote.response.ArticleResponse
 
 internal class ArticleResponseConverter(

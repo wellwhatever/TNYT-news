@@ -6,7 +6,7 @@ compileSdk = "34"
 targetSdk = "34"
 
 # Gradle plugins
-androidGradlePlugin = "8.2.0"
+androidGradlePlugin = "8.2.2"
 crashlyticsGradlePlugin = "2.9.9"
 appdistributionGradlePlugin = "4.2.0"
 gms = "4.4.1"
@@ -20,12 +20,12 @@ androidCore = "1.12.0"
 lifecycle = "2.7.0"
 
 # Kotlin
-kotlin = "1.9.22"
+kotlin = "1.9.23"
 coroutines = "1.8.0"
 kotlin-immutableCollections = "0.3.7"
 
 # KSP
-ksp = "1.9.22-1.0.18"
+ksp = "1.9.23-1.0.20"
 
 # Network
 ktor = "2.3.8"
@@ -38,7 +38,7 @@ sqlDelight = "2.0.1"
 
 # Compose
 composeBom = "2024.02.02"
-composeCompiler = "1.5.10"
+composeCompiler = "1.5.11"
 composeActivity = "1.8.2"
 composeViewmodel = "2.7.0"
 composeCoil = "2.5.0"
@@ -138,6 +138,8 @@ ktor-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
 ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
 ktor-android = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
 ktor-ios = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-test = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
 
 # Persistance
@@ -146,6 +148,7 @@ sqldelight-common = { module = "app.cash.sqldelight:runtime", version.ref = "sql
 sqldelight-coroutines = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
 sqldelight-ios = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+sqldelight-driver = { module = "app.cash.sqldelight:sqlite-driver", version.ref = "sqlDelight" }
 
 # Firebase
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
@@ -158,12 +161,14 @@ mockkAndroid = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 testArchCore = { module = "androidx.arch.core:core-testing", version.ref = "testArchCore" }
 testRunner = { module = "androidx.test:runner", version.ref = "testRunner" }
 testRules = { module = "androidx.test:rules", version.ref = "testRules" }
-junit = { module = "junit:junit", version.ref = "junit" }
 junitExt = { module = "androidx.test.ext:junit", version.ref = "junitExt" }
-turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
-kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
-kotest-property-testing = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+junit = { module = "junit:junit", version.ref = "junit" }
 kotest-runner = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+kotest-property-testing = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-assertions = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-engine = { module = "io.kotest:kotest-framework-engine", version.ref = "kotest" }
 
 # Desugaring
 desugaring = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugaring" }
@@ -182,6 +187,7 @@ kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+
 skie = { id = "co.touchlab.skie", version.ref = "skie" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlyticsGradlePlugin" }
@@ -193,10 +199,11 @@ news-android-application = { id = "news.android.application", version = "unspeci
 news-android-application-compose = { id = "news.android.application.compose", version = "unspecified" }
 news-android-library = { id = "news.android.library", version = "unspecified" }
 news-android-library-compose = { id = "news.android.library.compose", version = "unspecified" }
-news-android-test-library = { id = "news.android.test", version = "unspecified" }
+news-android-test = { id = "news.android.test", version = "unspecified" }
 news-android-compose-navigation = { id = "news.android.navigation", version = "unspecified" }
 news-android-firebase = { id = "news.android.firebase", version = "unspecified" }
 news-kotlin-multiplatform-library = { id = "news.kotlin.multiplatform.library", version = "unspecified" }
+news-kotlin-multiplatform-test = { id = "news.kotlin.multiplatform.test", version = "unspecified" }
 news-database-sqldelight = { id = "news.database.sqldelight", version = "unspecified" }
 
 [bundles]
@@ -234,17 +241,26 @@ ktor-multiplatform = [
     "ktor-negotiation",
     "ktor-serialization",
     "ktor-auth",
-    "ktor-logging"
+    "ktor-logging",
+    "ktor-test",
+    "ktor-cio",
+]
+
+kmm-unit-testing = [
+    "kotest-assertions",
+    "kotest-engine",
+    "kotlin-coroutinesTest",
+    "turbine",
+    "kotest-runner",
+    "koin-multiplatform",
 ]
 
 unitTesting = [
-    "junit",
-    "junitExt",
-    "mockkAndroid",
-    "testRunner",
-    "testRules",
+    "kotest-assertions",
+    "kotest-engine",
     "kotlin-coroutinesTest",
-    "turbine"
+    "turbine",
+    "kotest-runner",
 ]
 
 navigation = [

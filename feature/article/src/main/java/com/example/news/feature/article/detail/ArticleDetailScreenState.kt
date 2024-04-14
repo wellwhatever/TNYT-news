@@ -1,6 +1,6 @@
 package com.example.news.feature.article.detail
 
-import com.example.news.shared.code.model.Article
+import com.example.news.shared.core.model.Article
 
 sealed interface ArticleDetailScreenState {
     data object Loading : ArticleDetailScreenState

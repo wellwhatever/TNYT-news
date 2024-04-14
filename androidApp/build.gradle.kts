@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.example.news.android"
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.1"
     }
     signingConfigs {
         create("release") {
@@ -29,6 +29,25 @@ android {
         }
         debug {
             signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
+    packaging {
+        resources {
+            excludes.addAll(
+                listOf(
+                    "**/attach_hotspot_windows.dll",
+                    "META-INF/AL2.0",
+                    "META-INF/LGPL2.1"
+                )
+            )
+            merges.addAll(
+                listOf(
+                    "META-INF/licenses/**",
+                    "META-INF/LICENSE.md",
+                    "META-INF/LICENSE-notice.md"
+                )
+            )
         }
     }
 }
