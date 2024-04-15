@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
@@ -30,27 +29,17 @@ class ArticleListViewModel internal constructor(
     private val _eventFlow = Channel<ArticleListEvent>(Channel.CONFLATED)
     val eventFlow = _eventFlow.receiveAsFlow()
 
-    private val filteredArticles: Flow<List<Article>?> = searchQueryFlow.onEach {
-        println("filteredArticles: $it")
-    }
+    private val filteredArticles: Flow<List<Article>?> = searchQueryFlow
         .transformLatest {
             emit(null)
             emit(getFilteredArticles(it))
         }
 
-    val searchBarState = searchQueryFlow.onEach {
-        println("searchBarState, searchQueryFlow: $it")
-    }.map {
-        ArticleSearchBarState(it)
-    }
+    private val searchBarState = searchQueryFlow.map(::ArticleSearchBarState)
 
-    val articleListState = combine(
-        filteredArticles.onEach {
-            println("articleListState, filteredArticles: $it")
-        },
-        errorFlow.onEach {
-            println("articleListState, errorFlow: $it")
-        },
+    private val articleListState = combine(
+        filteredArticles,
+        errorFlow,
     ) { articles, error ->
         when {
             error != null -> errorMapper.mapToArticleListError(error)
@@ -62,21 +51,14 @@ class ArticleListViewModel internal constructor(
     }
 
     val articleListScreenState: StateFlow<ArticleListScreenState> = combine(
-        searchBarState.onEach {
-            println("articleListScreenState, searchbarstate: $it")
-        },
-        articleListState.onEach {
-            println("articleListScreenState, articleListState: $it")
-        },
+        searchBarState,
+        articleListState,
     ) { searchState, articleState ->
-        println("combined:" + "search:$searchState" + "articles:$articleState")
         ArticleListScreenState.Content(
             articleListState = articleState,
             searchBarState = searchState,
         )
     }.stateInVmWithInitial(ArticleListScreenState.Loading)
-
-    val screenStateFlow: Flow<ArticleListScreenState> = articleListScreenState
 
     private suspend fun getFilteredArticles(query: String): List<Article>? {
         return try {

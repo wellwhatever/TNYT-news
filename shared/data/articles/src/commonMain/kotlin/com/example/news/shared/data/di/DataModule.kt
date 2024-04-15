@@ -30,7 +30,7 @@ val articleDataModule = module {
 
     single {
         NetworkClient(
-            // TODO extract to secrets!
+            // This should be extracted to secrets
             apiKey = "Dt7Q08LpKCGVrKTxfWtpxAguSrM6ddTx",
             baseUrl = "https://api.nytimes.com/",
             httpClient = get(),
