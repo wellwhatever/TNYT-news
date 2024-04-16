@@ -1,4 +1,4 @@
-name: static_analysis_pr
+name: Build
 on: [ pull_request ]
 
 jobs:
