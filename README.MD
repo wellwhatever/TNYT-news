@@ -72,7 +72,7 @@ component.
 
 ### Database
 
-**SQLDelight** was employed as a multiplatform database that would work on both Android and iOS
+**SQLDelight** was chosen as a multiplatform database that would work on both Android and iOS
 platforms.
 
 ### Ktor
