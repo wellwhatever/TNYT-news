@@ -50,9 +50,9 @@ Description on most important structure components.
 #### KMM Modularization
 
 Project shares all business logic between different platforms. To support project's architecture,
-shared code is also splitted into different modules, following project's architecture. Because KMM
-doesn't really support multi-module application, to import **_shared_** module is used as **umbrella
-** module.
+shared code is also split into different modules, following project's architecture. Because KMM
+doesn't really support multi-module application, **_shared_** module is used as **umbrella**
+module.
 
 ## Technologies and Libraries
 
@@ -84,14 +84,15 @@ and reuse of build-logic.
 
 ## Detekt
 
-**Detekt** static analysis workflow is used in combination with **Review Dog** to check Github pull
-requests.
+**Detekt** static analysis workflow is used in combination with **Review Dog** to check pull
+requests and write reports directly in code review section.
 
 ## Testing
 
 Business logic of application is tested using **Kotest** framework. Fake doubles are used instead of
-mocks to provide fake dependencies to tested classes. To provide specific fake implementations,
-separate module **core/testing** was created.
+mocks to provide fake dependencies to test classes. To provide specific fake implementations,
+separate module **core/testing** was created. Use cases are not tested in this example, as they
+doesn't contain any logic, however they should be definitely tested in real project.
 
 ## App Distribution
 
