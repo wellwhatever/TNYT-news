@@ -1,5 +1,5 @@
-![example workflow]
-(https://github.com/wellwhatever/TNYT-news/actions/workflows/pull_request.yaml/badge.svg)
+![example]
+(https://github.com/wellwhatever/TNYT-news/actions/workflows/pull_request.yaml/badge.svg?branch=${master})
 
 # The New York Times News Multiplatform Mobile Application
 
