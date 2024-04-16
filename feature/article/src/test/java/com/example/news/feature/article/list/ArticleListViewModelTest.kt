@@ -27,7 +27,7 @@ class ArticleListViewModelTest : FunSpec({
         fakeRepository = FakeArticleRepository()
         viewModel = ArticleListViewModel(
             GetArticlesUseCase(fakeRepository),
-            ArticleListErrorMapper()
+            ArticleListErrorMapper(),
         )
     }
 
@@ -127,7 +127,7 @@ class ArticleListViewModelErrorTest : FunSpec({
         fakeRepository = FakeErrorArticleRepository()
         viewModel = ArticleListViewModel(
             GetArticlesUseCase(fakeRepository),
-            ArticleListErrorMapper()
+            ArticleListErrorMapper(),
         )
     }
     test("articleListScreenState should emmit error state") {
@@ -153,7 +153,6 @@ class ArticleListViewModelErrorTest : FunSpec({
                 ArticleListScreenState.Content(expectedListState, expectedSearchBarState)
 
             result shouldBe expected
-
         }
     }
 })
