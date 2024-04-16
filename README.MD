@@ -1,4 +1,4 @@
-![example](https://github.com/wellwhatever/TNYT-news/actions/workflows/build.yaml/badge.svg?branch=master)
+![example branch parameter](https://github.com/wellwhatever/TNYT-news/actions/workflows/build.yaml/badge.svg?branch=master)
 
 # The New York Times News Multiplatform Mobile Application
 
