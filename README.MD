@@ -3,8 +3,8 @@
 The New York Times News is a simple KMM application designed to
 demonstrate approach to mobile application development.
 
-All keys are kept in repository, for simplicity, as it's only showcase of code samples.
-In real project they should be kept in some safer places as secrets in repository, etc.
+All keys are kept in repository for simplicity as it's only showcase of code samples.
+In real project they should be kept in some safer places e.g secrets in repository, etc.
 
 ## Overview
 
