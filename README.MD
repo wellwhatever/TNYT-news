@@ -1,3 +1,6 @@
+![example workflow]
+(https://github.com/wellwhatever/TNYT-news/actions/workflows/pull_request.yaml/badge.svg)
+
 # The New York Times News Multiplatform Mobile Application
 
 The New York Times News is a simple KMM application designed to
