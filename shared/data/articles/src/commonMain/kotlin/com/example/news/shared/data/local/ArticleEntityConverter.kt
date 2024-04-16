@@ -1,7 +1,7 @@
 package com.example.news.shared.data.local
 
 import com.example.news.ArticleEntity
-import com.example.news.shared.code.model.Article
+import com.example.news.shared.core.model.Article
 import kotlinx.datetime.LocalDate
 
 internal class ArticleEntityConverter {

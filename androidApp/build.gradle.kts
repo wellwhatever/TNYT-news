@@ -31,6 +31,25 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
+
+    packaging {
+        resources {
+            excludes.addAll(
+                listOf(
+                    "**/attach_hotspot_windows.dll",
+                    "META-INF/AL2.0",
+                    "META-INF/LGPL2.1"
+                )
+            )
+            merges.addAll(
+                listOf(
+                    "META-INF/licenses/**",
+                    "META-INF/LICENSE.md",
+                    "META-INF/LICENSE-notice.md"
+                )
+            )
+        }
+    }
 }
 
 dependencies {

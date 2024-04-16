@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.news.kotlin.multiplatform.library)
     alias(libs.plugins.kotlin.serialization)
+    id("news.kotlin.multiplatform.test")
 }
 
 kotlin {
@@ -16,6 +17,12 @@ kotlin {
             implementation(projects.shared.core.common)
             implementation(projects.shared.core.model)
             implementation(projects.shared.database)
+        }
+
+        androidUnitTest.dependencies {
+            implementation(libs.sqldelight.driver)
+            implementation(libs.ktor.test)
+            implementation(projects.shared.core.testing)
         }
     }
 }

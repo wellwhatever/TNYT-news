@@ -18,13 +18,11 @@ kotlin {
             }
         }
 
-        sourceSets {
-            commonMain.dependencies {
-                api(projects.shared.core.common)
-                api(projects.shared.core.model)
-                api(projects.shared.core.network)
-                api(projects.shared.domain.articles)
-            }
+        commonMain.dependencies {
+            api(projects.shared.core.common)
+            api(projects.shared.core.model)
+            api(projects.shared.core.network)
+            api(projects.shared.domain.articles)
         }
     }
 }

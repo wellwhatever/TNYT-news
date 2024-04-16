@@ -1,8 +1,5 @@
 plugins {
     alias(libs.plugins.news.kotlin.multiplatform.library)
-
-    // TODO check out why this plugin cannot be resolved!!!
-//    alias(libs.plugins.news.database.sqldelight)
     id("news.database.sqldelight")
 
 }

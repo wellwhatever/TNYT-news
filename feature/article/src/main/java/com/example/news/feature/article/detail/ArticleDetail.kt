@@ -30,7 +30,7 @@ import com.example.news.feature.article.R
 import com.example.news.feature.article.ui.CoilLoadingImage
 import com.example.news.feature.article.ui.GenericErrorScreen
 import com.example.news.feature.article.ui.GenericScreenLoading
-import com.example.news.shared.code.model.Article
+import com.example.news.shared.core.model.Article
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.flow.Flow

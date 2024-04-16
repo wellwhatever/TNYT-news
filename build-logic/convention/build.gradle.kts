@@ -38,7 +38,7 @@ gradlePlugin {
         }
         register("androidTest") {
             id = "news.android.test"
-            implementationClass = "AndroidLibraryTestConventionPlugin"
+            implementationClass = "AndroidTestConventionPlugin"
         }
         register("androidFirebase") {
             id = "news.android.firebase"
@@ -55,6 +55,10 @@ gradlePlugin {
         register("sqldelight") {
             id = "news.database.sqldelight"
             implementationClass = "SqlDelightConventionPlugin"
+        }
+        register("kmmUnitTest") {
+            id = "news.kotlin.multiplatform.test"
+            implementationClass = "KotlinMultiplatformAndroidLibraryTestConvention"
         }
     }
 }

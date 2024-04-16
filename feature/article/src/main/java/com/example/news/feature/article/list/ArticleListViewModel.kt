@@ -2,8 +2,8 @@ package com.example.news.feature.article.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.news.shared.code.model.Article
 import com.example.news.shared.core.common.stateInVmWithInitial
+import com.example.news.shared.core.model.Article
 import com.example.news.shared.core.network.DomainException
 import com.example.news.shared.domain.articles.GetArticlesUseCase
 import kotlinx.collections.immutable.toImmutableList
@@ -12,13 +12,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import kotlin.time.Duration.Companion.seconds
 
 class ArticleListViewModel internal constructor(
     private val getMostViewedArticles: GetArticlesUseCase,
@@ -32,15 +30,12 @@ class ArticleListViewModel internal constructor(
     val eventFlow = _eventFlow.receiveAsFlow()
 
     private val filteredArticles: Flow<List<Article>?> = searchQueryFlow
-        .debounce(0.5.seconds)
         .transformLatest {
             emit(null)
             emit(getFilteredArticles(it))
         }
 
-    private val searchBarState = searchQueryFlow.map {
-        ArticleSearchBarState(it)
-    }
+    private val searchBarState = searchQueryFlow.map(::ArticleSearchBarState)
 
     private val articleListState = combine(
         filteredArticles,

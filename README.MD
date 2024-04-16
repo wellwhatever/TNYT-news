@@ -50,9 +50,9 @@ Description on most important structure components.
 #### KMM Modularization
 
 Project shares all business logic between different platforms. To support project's architecture,
-shared code is also splitted into different modules, following project's architecture. Because KMM
-doesn't really support multi-module application, to import **_shared_** module is used as **umbrella
-** module.
+shared code is also split into different modules, following project's architecture. Because KMM
+doesn't really support multi-module application, **_shared_** module is used as **umbrella**
+module.
 
 ## Technologies and Libraries
 
@@ -84,13 +84,17 @@ and reuse of build-logic.
 
 ## Detekt
 
-Project has workflow to run **Detekt** static analysis in combination with **Review Dog** to analyse Github pull
-requests and write review comments in case of any warnings.
+**Detekt** static analysis workflow is used in combination with **Review Dog** to check pull
+requests and write reports directly in code review section.
 
 ## Testing
-TODO
-Describe testing here!
+
+Business logic of application is tested using **Kotest** framework. Fake doubles are used instead of
+mocks to provide fake dependencies to test classes. To provide specific fake implementations,
+separate module **core/testing** was created. Use cases are not tested in this example, as they
+doesn't contain any logic, however they should be definitely tested in real project.
 
 ## App Distribution
 
-Application is distributed using Firebase App Distribution. GitHub Actions is set up to automatically distribute release version of application every time something is pushed with 'v-' tag in 'release/...' branch. 
+Github workflows are set to build and distribute application to Firebase App Distribution when
+**release/--** branch with **v-** tag is pushed to remote.
